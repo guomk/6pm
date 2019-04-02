@@ -67,7 +67,6 @@ class SessionInfo extends StatelessWidget {
       'date': unmatchedDocument['date'],
       'startDateTime': unmatchedDocument['startDateTime'],
       'focus': unmatchedDocument['focus'],
-      'level': unmatchedDocument['level'],
       'userID1': unmatchedDocument['userID'],
       'userID2': globalUID.uid,
       'feedback1': "",
@@ -77,6 +76,7 @@ class SessionInfo extends StatelessWidget {
       'hasCheckIn1': false,
       'hasCheckIn2': false,
       'completed': false,
+      'numHour' : unmatchedDocument['numHour'],
     };
 
     //Add new MatchedDocument into DB

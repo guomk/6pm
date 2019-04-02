@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'GymTile.dart';
@@ -9,7 +8,9 @@ import 'package:path/path.dart' as path;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as geo;
+import 'package:location/location.dart' as loc;
+import 'gymInfo.dart';
 
 class GymPage extends StatefulWidget {
   final GymStorage storage;
@@ -66,14 +67,37 @@ class MapSampleState extends State<GymPage> {
     zoom: 10,
   );
   String kmlContent;
+  double latitude;
+  double longitude;
   List allTiles = [];
   @override
   void initState() {
     // _getLocation();
     super.initState();
+    // geo.Geolocator()
+    //     .getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high)
+    //     .then((geo.Position position) {
+    //   setState(() {
+    //     latitude = position.latitude;
+    //     longitude = position.longitude;
+    //     print(latitude);
+    //     print(longitude);
+    //   });
+    // });
+    loc.Location()
+        .getLocation()
+        .then((loc.LocationData position) {
+      setState(() {
+        latitude = position.latitude;
+        longitude = position.longitude;
+        print(latitude);
+        print(longitude);
+      });
+    });
     getGymTiles().then((List Tiles) {
       setState(() {
         allTiles = Tiles;
+        print(allTiles[0].distance);
       });
     });
   }
@@ -124,20 +148,21 @@ class MapSampleState extends State<GymPage> {
   final Set<Marker> _markers = {};
 
   void _onAddMarkerButtonPressed(GymTile tile) {
-  setState(() {
-    _markers.add(Marker(
-      // This marker id can be anything that uniquely identifies each marker.
-      markerId: MarkerId(LatLng(tile.latitude, tile.longitude).toString()),
-      // markerId: MarkerId(_lastMapPosition.toString()),
-      position: LatLng(tile.latitude, tile.longitude),
-      infoWindow: InfoWindow(
-        title: tile.name,
-        snippet: '5 Star Rating',
-      ),
-      icon: BitmapDescriptor.defaultMarker,
-    ));
-  });
-}
+    setState(() {
+      _markers.clear();
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(LatLng(tile.latitude, tile.longitude).toString()),
+        // markerId: MarkerId(_lastMapPosition.toString()),
+        position: LatLng(tile.latitude, tile.longitude),
+        infoWindow: InfoWindow(
+          title: tile.name,
+          snippet: tile.address,
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+  }
 
   LatLng _lastMapPosition = LatLng(1.3521, 103.8198);
 
@@ -177,16 +202,29 @@ class MapSampleState extends State<GymPage> {
                 margin: const EdgeInsets.only(left: 10.0, right: 10.0),
               ),
               Container(
-                  width: 150,
+                  width: 100,
                   child: Text(tile.distance.toString().substring(0, 4))
                   // child: Text(latitude.toString()),
-                  )
+                  ),
+                IconButton(
+            icon: new Icon(Icons.info),
+            tooltip: 'Refresh',
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => GymInfoPage(gym: tile)));
+            },
+            color: Colors.black,
+          ),
             ],
           )),
-          onTap: () {_onAddMarkerButtonPressed(tile);},
+          onTap: () {
+            _onAddMarkerButtonPressed(tile);
+          },
         );
 
     return new Scaffold(
+      appBar: AppBar(
+          title: Text('Search for Gyms'),
+        ),
       body: Column(
         children: <Widget>[
           Container(
@@ -290,11 +328,15 @@ class MapSampleState extends State<GymPage> {
 }
 
 Future<List> getGymTiles() async {
-  Position pos = await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  geo.Position pos = await geo.Geolocator()
+      .getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
+  double latitude = 0;
+  double longitude = 0;
   List allgyms = [];
   print(pos.latitude);
   print(pos.longitude);
+  print(latitude);
+  print(longitude);
   var content = await rootBundle.loadString('assets/EXERCISEFACILITIES.kml');
   var document = xml.parse(content);
 
@@ -336,13 +378,26 @@ Future<List> getGymTiles() async {
     }
     print(i);
     List coords = gymCoordinates[i].split(",");
-    double dis = await Geolocator().distanceBetween(pos.latitude, pos.longitude,
-        double.parse(coords[1]), double.parse(coords[0]));
+    double dis = await geo.Geolocator().distanceBetween(
+        pos.latitude, pos.longitude, double.parse(coords[1]), double.parse(coords[0]));
+    String des = tdList[23].text;
+    des = des.replaceAll(new RegExp(r'\n\s*\n'), '\n\n');
+    des = des.replaceAll('?', 'to');
+    des = des.trim();
+    if(des[des.length - 1] == 'T'){
+      des = des.substring(0, des.length - 1);
+    }
+    // des = des.replaceAll(new RegExp('\n\n'), '\n');
+    // des = des.replaceAll(new RegExp('\n\n\n'), '\n');
+    // des = des.replaceAll(new RegExp('\n\n\n'), '\n');
+    // des = des.replaceAll(new RegExp('\n\n\n\n'), '\n');
+    // des = des.replaceAll(new RegExp('\n\n\n\n\n'), '\n');
+    // des = des.replaceAll(new RegExp('\n\n\n\n\n\n'), '\n');
     var result = GymTile(
       name: gymNames[i],
       postalCode: tdList[7].text,
       address: tdList[19].text,
-      description: tdList[23].text,
+      description: des,
       latitude: double.parse(coords[1]),
       longitude: double.parse(coords[0]),
       distance: dis / 1000,

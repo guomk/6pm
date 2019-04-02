@@ -46,7 +46,7 @@ class SessionListState extends State<SessionList> {
                     ]);
                   }
                 } else {
-                  return new CircularProgressIndicator();
+                  return Center(child: new CircularProgressIndicator());
                 }
               }),
         ),
