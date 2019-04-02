@@ -189,16 +189,6 @@ class CreateSession2State extends State<CreateSession2> {
                       },
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(250.0, 20.0, 0.0, 0.0),
-                    child: IconButton(
-                      icon: Icon(Icons.help),
-                      color: Colors.black,
-                      onPressed: () {
-                        print("filled background");
-                      },
-                    ),
-                  ),
                 ],
               )),
           Container(

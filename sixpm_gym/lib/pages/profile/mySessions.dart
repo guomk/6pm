@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../globalUserID.dart' as globalUID;
 
-class MySession extends StatefulWidget {
-  final FirebaseUser user;
-  MySession({Key key, @required this.user}) : super(key: key);
+class MySessionList extends StatefulWidget {
   @override
-  _MySessionState createState() => new _MySessionState(user);
+  _MySessionListState createState() => new _MySessionListState();
 }
 
-class _MySessionState extends State<MySession> {
-  final FirebaseUser user;
-  _MySessionState(this.user);
+class _MySessionListState extends State<MySessionList> {
   CollectionReference col = Firestore.instance.collection('UnmatchedSession');
 
   Widget build(BuildContext context) {
@@ -19,30 +16,19 @@ class _MySessionState extends State<MySession> {
 
     return StreamBuilder<QuerySnapshot>(
       stream: col
-          .where('userID', isEqualTo: user.uid)
-          .snapshots(), //gets all completed sessions
+          .where('userID', isEqualTo: globalUID.uid)
+          .snapshots(), //gets all unmatched sessions by current user
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
           return new Text('Error: ${snapshot.error}'); //error checking
         switch (snapshot.connectionState) {
-          //if takes too long to load, display "loading"
           case ConnectionState.waiting:
             return new Center(child: CircularProgressIndicator());
           default:
             docs = snapshot.data.documents; //adds all documents to a list
 
             if (docs.length != 0) {
-              return Scaffold(
-                  appBar: AppBar(
-                    title: Text('My unmatched sessions'),
-                  ),
-                  body: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      ListView.builder(
+              return ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
@@ -172,16 +158,14 @@ class _MySessionState extends State<MySession> {
                                 ),
                               ));
                         },
-                      ),
-                    ],
-                  ));
+                      );
             } else {
               return Container(
                   padding: EdgeInsets.fromLTRB(35, 20, 35, 0),
                   alignment: Alignment.center,
                   child: Center(
                       child: Text(
-                          'There are no sessions to display. Why don\'t you create or join one?',
+                          'There are no sessions to display. Why don\'t you create one?',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold))));
             }
@@ -191,21 +175,21 @@ class _MySessionState extends State<MySession> {
   }
 }
 
-// class SessionHistory extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Scaffold(
-//         resizeToAvoidBottomPadding: false,
-//         appBar: AppBar(
-//           title: Text('History'),
-//         ),
-//         body: Column(
-//           children: <Widget>[
-//             SizedBox(height: 20),
-//             new Expanded(
-//               child: MySession(user), //Load sessions from DB
-//             )
-//           ],
-//         ));
-//   }
-// }
+class MySessions extends StatelessWidget {
+   @override
+   Widget build(BuildContext context) {
+     return new Scaffold(
+         resizeToAvoidBottomPadding: false,
+        appBar: AppBar(
+           title: Text('My Unmatched Sessions'),
+         ),
+         body: Column(
+           children: <Widget>[
+             SizedBox(height: 20),
+             new Expanded(
+               child: MySessionList(), //Load sessions from DB
+             )
+           ],
+         ));
+   }
+ }

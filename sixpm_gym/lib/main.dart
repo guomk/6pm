@@ -6,6 +6,7 @@ import 'pages/session/createSession.dart';
 import 'pages/session/sessionInfo.dart';
 import 'pages/session/joinSession.dart';
 import 'pages/session/sessionHistory.dart';
+import 'pages/profile/mySessions.dart';
 import 'pages/session/matchedSession.dart';
 import 'pages/session/search_session_gym.dart';
 import 'pages/session/rateSession.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => new SignupPage(),
         '/sessionHistory': (BuildContext context) => new SessionHistory(),
+        '/mySessions': (BuildContext context) => new MySessions(),
         '/rateSession': (BuildContext context) => new RateSession(),
         '/createSession': (BuildContext context) => new CreateSession(),
         '/sessionInfo': (BuildContext context) => new SessionInfo(),

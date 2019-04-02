@@ -223,12 +223,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MySession(
-                                          user: user,
-                                        )));
+                            Navigator.of(context).pushNamed('/mySessions');
                           },
                           child: Card(
                             child: Container(
