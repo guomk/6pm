@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../globalUserID.dart' as globalUID;
-import '../session/checkin.dart';
+import '../session/checkIn.dart';
 
 class MatchedSession extends StatelessWidget {
   MatchedSession(
@@ -26,6 +26,7 @@ class MatchedSession extends StatelessWidget {
 
   Widget _checkInButton(context, allowCheckIn) {
     if (!allowCheckIn) {
+      //15mins or less before session start time
       return Container(
         height: 40.0,
         child: Material(
@@ -47,6 +48,7 @@ class MatchedSession extends StatelessWidget {
         ),
       );
     } else {
+      //more than 15mins before session start time
       return Container(
         height: 40.0,
         child: Material(
@@ -56,7 +58,6 @@ class MatchedSession extends StatelessWidget {
           elevation: 7.0,
           child: InkWell(
             onTap: () {
-              print('[Check In] Pressed');
               if (document != null) {
                 bool partnerIsID1;
                 if (globalUID.uid == document['userID1']) //Partner is UserID2
@@ -98,7 +99,6 @@ class MatchedSession extends StatelessWidget {
   }
 
   void _confirmCancelDialog(context) {
-    // flutter defined function
     showDialog(
       context: context,
       builder: (context) => new AlertDialog(
@@ -114,12 +114,9 @@ class MatchedSession extends StatelessWidget {
                   DocumentReference docRef = Firestore.instance
                       .collection('MatchedSession')
                       .document(document.documentID);
-                  Firestore.instance
-                      .runTransaction((Transaction myTransaction) async {
-                    await myTransaction.delete(docRef);
-                    Navigator.popUntil(
-                        context, ModalRoute.withName('homepage'));
-                  });
+                  docRef.delete();
+
+                  Navigator.popUntil(context, ModalRoute.withName('homepage'));
                 },
                 child: new Text('Yes'),
               ),
@@ -130,9 +127,13 @@ class MatchedSession extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime checkin = DateTime.now().add(new Duration(minutes: 15));
-    final bool allowCheckIn = (checkin.isAfter(
-        document['startDateTime'])); //Only can check in after start time
+    DateTime _checkInMin = DateTime.now().add(new Duration(minutes: 15));
+    DateTime _checkInMax = DateTime.now().subtract(new Duration(minutes: 15));
+    final bool allowCheckIn =
+        ((_checkInMin.isAfter(document['startDateTime'])) &&
+            (_checkInMax.isBefore(document[
+                'startDateTime']))); //Only can check in +-15mins of start time
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Session Details'),
@@ -173,7 +174,10 @@ class MatchedSession extends StatelessWidget {
                                 'Partner: ' +
                                     snapshot.data['firstName'] +
                                     ' ' +
-                                    snapshot.data['lastName'],
+                                    snapshot.data['lastName'] +
+                                    '\n' +
+                                    'Partner Rating: ' +
+                                    snapshot.data['currentRating'].toStringAsFixed(2),
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.normal));
@@ -226,7 +230,6 @@ class MatchedSession extends StatelessWidget {
               elevation: 7.0,
               child: InkWell(
                 onTap: () {
-                  print('[Cancel Session] Pressed');
                   _confirmCancelDialog(context);
                 },
                 child: Center(

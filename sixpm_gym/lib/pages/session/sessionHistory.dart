@@ -22,16 +22,17 @@ class SessionHistoryListState extends State<SessionHistoryList> {
         if (snapshot.hasError)
           return new Text('Error: ${snapshot.error}'); //error checking
         switch (snapshot.connectionState) {
-          //if takes too long to load, display "loading"
           case ConnectionState.waiting:
             return Center(child: new CircularProgressIndicator());
           default:
             docs = snapshot.data.documents; //adds all documents to a list
+
             //client-side filters
             docs.retainWhere((item) => ((item['userID1'] == globalUID.uid) ||
                 (item['userID2'] ==
                     globalUID
                         .uid))); //removes all documents where both userID1 and userID2 != current user
+                        
             if (docs.length != 0) {
               return ListView.builder(
                 scrollDirection: Axis.vertical,

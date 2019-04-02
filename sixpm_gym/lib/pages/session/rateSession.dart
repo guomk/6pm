@@ -3,6 +3,7 @@ import 'package:flutter_rating/flutter_rating.dart';
 import '../widgets/checkbox_comment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../globalUserID.dart' as globalUID;
+import '../widgets/global_comment.dart' as globalComment;
 
 class RateSession extends StatefulWidget {
   final DocumentSnapshot document;
@@ -12,15 +13,14 @@ class RateSession extends StatefulWidget {
 }
 
 class _RateSessionState extends State<RateSession> {
-  //GET BOTH USER PROFILE DOCUMENT
   _RateSessionState(DocumentSnapshot document) {
     this.document = document;
   }
   DocumentSnapshot document, currentUserDoc, partnerDoc;
   final textController = TextEditingController();
-
+  
   getCurrentUser() {
-    Firestore.instance //Get partner profile
+    Firestore.instance //Get current user profile
         .collection('Profile')
         .document(globalUID.uid)
         .get()
@@ -46,8 +46,9 @@ class _RateSessionState extends State<RateSession> {
   @override
   void initState() {
     super.initState();
-    currentUserDoc = getCurrentUser();
-    partnerDoc = getPartner(document);
+    getCurrentUser();
+    getPartner(document);
+    globalComment.init();
   }
 
   void dispose() {
@@ -57,11 +58,10 @@ class _RateSessionState extends State<RateSession> {
   }
 
   void _errorDialog(context, reason) {
-    if (reason == 1) {
+    if (reason == 1) {    //No rating selected
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("Error!"),
             content: new Text("Please select a rating for your partner!"),
@@ -76,11 +76,10 @@ class _RateSessionState extends State<RateSession> {
           );
         },
       );
-    } else {
+    } else {      //No feedback provided
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("Error!"),
             content: new Text("Please provide some feedback!"),
@@ -98,11 +97,10 @@ class _RateSessionState extends State<RateSession> {
     }
   }
 
-  Future<bool> _onWillPop() {
+  Future<bool> _onWillPop() {   //Block user from backing out of feedback page
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("Error!"),
           content: new Text("You cannot skip this feedback page!"),
@@ -223,11 +221,13 @@ class _RateSessionState extends State<RateSession> {
                               } else if (textController.text == '') {
                                 _errorDialog(context, 2);
                               } else {
+                                //Update matchedDocument rate, feedback, comments
                                 if (partnerIsID1) {
                                   document.reference
                                       .updateData({
                                         'rate2': rating,
-                                        'feedback2': textController.text
+                                        'feedback2': textController.text,
+                                        'comment2' : globalComment.getComments()
                                       })
                                       .whenComplete(() {})
                                       .catchError((e) => print(e));
@@ -235,7 +235,8 @@ class _RateSessionState extends State<RateSession> {
                                   document.reference
                                       .updateData({
                                         'rate1': rating,
-                                        'feedback1': textController.text
+                                        'feedback1': textController.text,
+                                        'comment1' : globalComment.getComments()
                                       })
                                       .whenComplete(() {})
                                       .catchError((e) => print(e));

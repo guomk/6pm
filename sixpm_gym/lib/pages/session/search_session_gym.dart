@@ -7,8 +7,6 @@ class SearchSession extends StatefulWidget {
 }
 
 class SearchSessionState extends State<SearchSession> {
-  // final formKey = new GlobalKey<FormState>();
-  // final key = new GlobalKey<ScaffoldState>();
   final TextEditingController _filter = new TextEditingController();
   String _searchText = "";
   List names = new List();
@@ -132,7 +130,7 @@ class SearchSessionState extends State<SearchSession> {
         this._appBarTitle = new TextField(
           controller: _filter,
           decoration: new InputDecoration(
-              prefixIcon: new Icon(Icons.search), hintText: 'Search...'),
+              prefixIcon: new Icon(Icons.search), hintText: 'Search for a gym'),
         );
       } else {
         this._searchIcon = new Icon(Icons.search);

@@ -63,11 +63,10 @@ class CreateSessionState extends State<CreateSession> {
     '23:30',
   ];
 
-  void _errorDialog(context) {
+  void _gymErrorDialog(context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("Error!"),
           content: new Text("Please select a gym before proceeding!"),
@@ -89,7 +88,6 @@ class CreateSessionState extends State<CreateSession> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("Error!"),
             content: new Text("End time must be after start time!"),
@@ -108,7 +106,6 @@ class CreateSessionState extends State<CreateSession> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("Error!"),
             content: new Text("Start date/time cannot be in the past!"),
@@ -260,7 +257,6 @@ class CreateSessionState extends State<CreateSession> {
                                   );
                                 }).toList(),
                                 onChanged: (item) {
-                                  print('[Dropdown] changed to ' + item);
                                   setState(() {
                                     _startTime = item;
                                     _startTimeIndex = time.indexOf(item);
@@ -295,7 +291,6 @@ class CreateSessionState extends State<CreateSession> {
                                   );
                                 }).toList(),
                                 onChanged: (item) {
-                                  print('[Dropdown] changed to ' + item);
                                   setState(() {
                                     _endTime = item;
                                     _endTimeIndex = time.indexOf(item);
@@ -359,7 +354,7 @@ class CreateSessionState extends State<CreateSession> {
                         onTap: () {
                           if (_location == "SEARCH FOR GYM") {
                             //No gym selected
-                            _errorDialog(context);
+                            _gymErrorDialog(context);
                           } else if (_startTimeIndex >= _endTimeIndex) {
                             //start time after end time
                             _timeErrorDialog(context, 1);
@@ -369,7 +364,6 @@ class CreateSessionState extends State<CreateSession> {
                           } else {
                             String _startDateTime =
                                 globals.dateISO + ' ' + _startTime + ':00';
-                            print(_startDateTime);
                             DateTime startDateTime =
                                 DateTime.parse(_startDateTime);
                             params.add({'location': _location});

@@ -7,18 +7,14 @@ class SessionInfo extends StatelessWidget {
       {this.unmatchedDocument}); //constructor receives session document from joinSession
   final DocumentSnapshot unmatchedDocument;
 
-// user defined function
-  void _showDialog(context) {
-    // flutter defined function
+  void _showConfirmationDialog(context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("Confirmation Screen"),
           content: new Text("Confirm join session?"),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text("Back"),
               onPressed: () {
@@ -36,6 +32,18 @@ class SessionInfo extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<DocumentSnapshot> getPartner(DocumentSnapshot document) async {
+    DocumentSnapshot partnerDoc;
+    String partnerUID = document['userID'];
+
+    partnerDoc = await Firestore.instance //Get partner profile
+        .collection('Profile')
+        .document(partnerUID)
+        .get();
+
+    return partnerDoc;
   }
 
   Future add() async {
@@ -71,6 +79,8 @@ class SessionInfo extends StatelessWidget {
       'userID2': globalUID.uid,
       'feedback1': "",
       'feedback2': "",
+      'comment1': "",
+      'comment2': "",
       'rate1': null,
       'rate2': null,
       'hasCheckIn1': false,
@@ -163,6 +173,22 @@ class SessionInfo extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20.0, fontWeight: FontWeight.normal),
                   ),
+                  new FutureBuilder(
+                      future: getPartner(unmatchedDocument),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data != null) {
+                            return Text(
+                                    'Partner Rating: ' +
+                                    snapshot.data['currentRating'].toStringAsFixed(2),
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.normal));
+                          }
+                        } else {
+                          return new CircularProgressIndicator();
+                        }
+                      }),
                   SizedBox(height: 20),
                 ],
               ),
@@ -178,8 +204,7 @@ class SessionInfo extends StatelessWidget {
           elevation: 7.0,
           child: InkWell(
             onTap: () {
-              print('[Join Session] Pressed');
-              _showDialog(context);
+              _showConfirmationDialog(context);
             },
             child: Center(
               child: Text(
@@ -203,7 +228,6 @@ class SessionInfo extends StatelessWidget {
               elevation: 7.0,
               child: InkWell(
                 onTap: () {
-                  print('[Go Back] Pressed');
                   Navigator.of(context).pop();
                 },
                 child: Center(

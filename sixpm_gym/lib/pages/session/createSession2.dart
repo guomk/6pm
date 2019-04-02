@@ -15,15 +15,12 @@ class CreateSession2 extends StatefulWidget {
 
 class CreateSession2State extends State<CreateSession2> {
   String _level = 'Newbie';
-
   DocumentReference doc;
-// user defined function
-  void _showDialog() {
-    // flutter defined function
+
+  void _confirmationDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("New Session Info"),
           content: new Text("Date: " +
@@ -43,7 +40,6 @@ class CreateSession2State extends State<CreateSession2> {
               "Level of experience: " +
               _level),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             Container(
               child: Row(
                 children: <Widget>[
@@ -100,7 +96,7 @@ class CreateSession2State extends State<CreateSession2> {
 
     String idNum = (highestID + 1).toString();
     doc = Firestore.instance.document('UnmatchedSession/session$idNum');
-    
+
     Map<String, Object> data = <String, Object>{
       'ID': idNum,
       'location': widget.params[0]['location'],
@@ -182,20 +178,9 @@ class CreateSession2State extends State<CreateSession2> {
                         );
                       }).toList(),
                       onChanged: (item) {
-                        print('[Dropdown] changed to ' + item);
                         setState(() {
                           _level = item;
                         });
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(250.0, 20.0, 0.0, 0.0),
-                    child: IconButton(
-                      icon: Icon(Icons.help),
-                      color: Colors.black,
-                      onPressed: () {
-                        print("filled background");
                       },
                     ),
                   ),
@@ -231,7 +216,7 @@ class CreateSession2State extends State<CreateSession2> {
                       elevation: 7.0,
                       child: InkWell(
                         onTap: () {
-                          //Reset globals
+                          //Reset globals set in this page only
                           globals.focus = 'HIIT';
                           globals.sameGender = true;
                           Navigator.of(context).pop();
@@ -250,7 +235,6 @@ class CreateSession2State extends State<CreateSession2> {
                   ),
                   SizedBox(height: 10.0, width: 150),
                   Container(
-                    // padding: EdgeInsets.only(top: 10.0, left: 0.0, right: 20.0),
                     height: 40.0,
                     width: 100.0,
                     child: Material(
@@ -260,7 +244,7 @@ class CreateSession2State extends State<CreateSession2> {
                       elevation: 7.0,
                       child: InkWell(
                         onTap: () {
-                          _showDialog();
+                          _confirmationDialog();
                         },
                         child: Center(
                           child: Text(

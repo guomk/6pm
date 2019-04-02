@@ -176,20 +176,15 @@ class _MyHomePageState extends State<WelcomePage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      debugPrint(_email);
-      debugPrint(_password);
       try {
         FirebaseUser user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
         globalUID.uid = user.uid;
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => Home(user: user)));
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => HomePage(user: user),
                 settings: RouteSettings(name: "homepage")));
-        // Navigator.of(context).pushNamed('homepage');
       } catch (e) {
         showDialog(
             context: context,
@@ -198,7 +193,6 @@ class _MyHomePageState extends State<WelcomePage> {
                   content:
                       Text('Please check your account or password is correct'),
                 ));
-        print('Wrong account');
         print(e.message);
       }
     }

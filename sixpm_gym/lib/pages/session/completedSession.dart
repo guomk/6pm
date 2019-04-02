@@ -25,17 +25,61 @@ class CompletedSession extends StatelessWidget {
 
   Widget _partnerFeedback(context, partnerIsID1) {
     if (partnerIsID1) {
-      return Text(
-        'Partner Feedback:\n' + document['feedback1'],
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
-        overflow: TextOverflow.fade,
-      );
+      if (document['feedback1'] == '')
+        return Text(
+          'Partner Feedback:\nYour partner has not left you feedback yet. Please check back again later!',
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+          overflow: TextOverflow.fade,
+        );
+      else {
+        if (document['comment1'] != '') //Partner left comments
+          return Text(
+            'Partner Feedback:\n' +
+                document['feedback1'] +
+                '\n\nPartner marked you as:\n' +
+                document['comment1'],
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+            overflow: TextOverflow.fade,
+          );
+          else  //No comments
+          return Text(
+            'Partner Feedback:\n' +
+                document['feedback1'],
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+            overflow: TextOverflow.fade,
+          );
+      }
     } else {
-      return Text(
-        'Partner Feedback:\n' + document['feedback2'],
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal,),
-        overflow: TextOverflow.fade,
-      );
+      if (document['feedback2'] == '')
+        return Text(
+          'Partner Feedback:\nYour partner has not left you feedback yet. Please check back again later!',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.normal,
+          ),
+          overflow: TextOverflow.fade,
+        );
+      else {
+        if (document['comment2'] != '') //Partner left comments
+          return Text(
+            'Partner Feedback:\n' +
+                document['feedback2'] +
+                '\n\nPartner marked you as:\n' +
+                document['comment2'],
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.normal,
+            ),
+            overflow: TextOverflow.fade,
+          );
+          else //No comments
+          return Text(
+            'Partner Feedback:\n' +
+                document['feedback2'],
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+            overflow: TextOverflow.fade,
+          );
+      }
     }
   }
 
@@ -73,62 +117,62 @@ class CompletedSession extends StatelessWidget {
           SizedBox(height: 10),
           Container(
             color: Colors.white,
-            height: 350,
-            width: 370,
+            height: 380,
+            width: 380,
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 20),
-                  new FutureBuilder(
-                      future: getPartner(document),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data != null) {
-                            return Text(
-                                'Partner: ' +
-                                    snapshot.data['firstName'] +
-                                    ' ' +
-                                    snapshot.data['lastName'],
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.normal));
-                          }
-                        } else {
-                          return new CircularProgressIndicator();
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 20),
+                new FutureBuilder(
+                    future: getPartner(document),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data != null) {
+                          return Text(
+                              'Partner: ' +
+                                  snapshot.data['firstName'] +
+                                  ' ' +
+                                  snapshot.data['lastName'],
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal));
                         }
-                      }),
-                  SizedBox(height: 10),
-                  Text(
-                    'Date: ' + document['date'],
-                    style: TextStyle(
-                        fontSize: 20.0, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Time: ' +
-                        document['startTime'] +
-                        ' - ' +
-                        document['endTime'],
-                    style: TextStyle(
-                        fontSize: 20.0, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Location: ' + document['location'],
-                    style: TextStyle(
-                        fontSize: 20.0, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Focus: ' + document['focus'],
-                    style: TextStyle(
-                        fontSize: 20.0, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(height: 10),
-                  _partnerFeedback(context, partnerIsID1),
-                  SizedBox(height: 20),
-                ],
-              ),
+                      } else {
+                        return new CircularProgressIndicator();
+                      }
+                    }),
+                SizedBox(height: 10),
+                Text(
+                  'Date: ' + document['date'],
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Time: ' +
+                      document['startTime'] +
+                      ' - ' +
+                      document['endTime'],
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Location: ' + document['location'],
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Focus: ' + document['focus'],
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+                ),
+                SizedBox(height: 10),
+                _partnerFeedback(context, partnerIsID1),
+                SizedBox(height: 20),
+              ],
+            ),
           ),
         ],
       ),

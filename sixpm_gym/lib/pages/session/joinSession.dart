@@ -12,10 +12,11 @@ class SessionListState extends State<SessionList> {
   CollectionReference col = Firestore.instance.collection('UnmatchedSession');
   String _gender = '', _level = '';
 
-  Future getCurrentGender() async {
-    DocumentReference document = Firestore.instance //Get current user gender
-        .collection('Profile')
-        .document(globalUID.uid);
+  Future _getCurrentGenderLevel() async {
+    DocumentReference document =
+        Firestore.instance //Get current user gender and level of experience
+            .collection('Profile')
+            .document(globalUID.uid);
     document.get().then((profile) {
       setState(() {
         _gender = profile['gender'];
@@ -27,7 +28,7 @@ class SessionListState extends State<SessionList> {
   @override
   void initState() {
     super.initState();
-    getCurrentGender();
+    _getCurrentGenderLevel();
   }
 
   Widget build(BuildContext context) {
@@ -40,11 +41,11 @@ class SessionListState extends State<SessionList> {
         if (snapshot.hasError)
           return new Text('Error: ${snapshot.error}'); //error checking
         switch (snapshot.connectionState) {
-          //if takes too long to load, display "loading"
           case ConnectionState.waiting:
             return Center(child: new CircularProgressIndicator());
           default:
             docs = snapshot.data.documents; //adds all documents to a list
+
             //client-side filters
             docs.retainWhere((item) =>
                 item['userID'] !=
@@ -54,15 +55,16 @@ class SessionListState extends State<SessionList> {
             docs.retainWhere((item) => ((item['sameGender'] == false) ||
                 ((item['sameGender'] == true) &&
                     (item['userGender'] ==
-                        _gender)))); //removes all documents where sameGender == true but userGender != curent gender
+                        _gender)))); //removes all documents where sameGender = true but userGender != curent gender
 
             if (_level == 'Newbie')
-            docs.retainWhere((item) =>
-                item['level'] ==
-                'Pro' ); //removes all documents where level = Newbie if the current user is a Newbie
+              docs.retainWhere((item) =>
+                  item['level'] ==
+                  'Pro'); //removes all documents where level = Newbie if the current user is a Newbie
 
             docs.retainWhere((item) => now.isBefore(item[
-                'startDateTime'])); //removes all documents where start datetime is before now
+                'startDateTime'])); //removes all documents where start datetime is before now (expired)
+
             if (docs.length != 0) {
               return ListView.builder(
                 scrollDirection: Axis.vertical,

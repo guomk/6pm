@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './widgets/sessionMain.dart';
-import './gym/gym.dart';
 import './profile/profile.dart';
 import './gym/weather.dart';
 
@@ -20,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 1;
 
   void _logoutDialog(context) {
-    // flutter defined function
     showDialog(
       context: context,
       builder: (context) => new AlertDialog(
@@ -64,7 +62,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      // GymPage(storage: GymStorage()),
       WeatherPage(),
       SessionMainPage(),
       MyProfile(

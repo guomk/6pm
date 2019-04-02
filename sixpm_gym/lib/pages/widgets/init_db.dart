@@ -19,12 +19,27 @@ class InitDBWidget extends StatelessWidget {
 
 //Profiles
     data = <String, Object>{
+      'DOB': '1994-01-01',
+      'currentRating': 4.83,
+      'email': 'jy@gmail.com',
+      'firstName': 'Jingyi',
+      'gender': 'male',
+      'hourSum': 10.0,
+      'interest': 'Fit girls',
+      'strength': 'HIITing up girls',
+      'lastName': 'Yang',
+      'level': 'Pro',
+      'numOfSession': 5,
+      'username': 'James23',
+    };
+    profileList.add(data);
+    data = <String, Object>{
       'DOB': '1991-01-01',
       'currentRating': 5.0,
       'email': 'testing@gmail.com',
       'firstName': 'Alex',
       'gender': 'male',
-      'hourSum': 10,
+      'hourSum': 10.0,
       'interest': 'Programming',
       'strength': 'Programming',
       'lastName': 'Ang',
@@ -89,7 +104,7 @@ class InitDBWidget extends StatelessWidget {
       'level': 'Newbie',
       'focus': 'HIIT',
       'sameGender': false,
-      'userID': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userGender': 'male',
       'isMatched': false,
       'numHour': 1,
@@ -153,7 +168,7 @@ class InitDBWidget extends StatelessWidget {
       'level': 'Pro',
       'focus': 'Strength',
       'sameGender': false,
-      'userID': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userGender': 'male',
       'isMatched': false,
       'numHour': 2,
@@ -169,7 +184,7 @@ class InitDBWidget extends StatelessWidget {
       'level': 'Pro',
       'focus': 'Burpees',
       'sameGender': true,
-      'userID': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userGender': 'male',
       'isMatched': false,
       'numHour': 1,
@@ -252,13 +267,15 @@ class InitDBWidget extends StatelessWidget {
       'focus': 'HIIT',
       'completed': true,
       'userID1': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
-      'userID2': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID2': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'hasCheckIn1' : true,
       'hasCheckIn2' : true,
       'rate1': 5,
       'rate2': 5,
-      'feedback1': 'I\'m so glad I found Alex through this app!',
+      'feedback1': 'I\'m so glad I found Jingyi through this app!',
       'feedback2': 'Debbie is a pretty good partner',
+      'comment1': 'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
+      'comment2': 'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
       'numHour': 2,
     };
     matchedList.add(data);
@@ -271,14 +288,16 @@ class InitDBWidget extends StatelessWidget {
       'startDateTime': DateTime.parse('2019-04-01 12:00:00'),
       'focus': 'Yoga',
       'completed': true,
-      'userID1': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
       'hasCheckIn1' : true,
       'hasCheckIn2' : true,
       'rate1': 4,
       'rate2': 5,
       'feedback1': 'Debbie is pretty decent',
-      'feedback2': 'Alex is highly recommended!',
+      'feedback2': 'Jingyi is highly recommended!',
+      'comment1': 'Considerate',
+      'comment2': '',
       'numHour': 1.5,
     };
     matchedList.add(data);
@@ -291,14 +310,16 @@ class InitDBWidget extends StatelessWidget {
       'startDateTime': DateTime.parse('2019-04-01 10:00:00'),
       'focus': 'Aerobics',
       'completed': true,
-      'userID1': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
       'hasCheckIn1' : true,
       'hasCheckIn2' : true,
       'rate1': 5,
       'rate2': 5,
       'feedback1': 'I really enjoy doing aerobics with Debbie',
-      'feedback2': 'Alex is the best trainer ever',
+      'feedback2': 'Jingyi is the best trainer ever',
+      'comment1': 'Enthusiastic',
+      'comment2': 'Helpful',
       'numHour': 4,
     };
     matchedList.add(data);
@@ -311,14 +332,16 @@ class InitDBWidget extends StatelessWidget {
       'startDateTime': DateTime.parse('2019-03-30 13:00:00'),
       'focus': 'Boxing',
       'completed': true,
-      'userID1': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'Fw4CaMn15mhgEz9OOoav2OEc8cF3',
       'hasCheckIn1' : true,
       'hasCheckIn2' : true,
       'rate1': 2,
-      'rate2': 5,
+      'rate2': 4,
       'feedback1': 'Charlie kinda sucks',
-      'feedback2': 'Alex is a God',
+      'feedback2': 'Jingyi is very handsome',
+      'comment1': 'Punctual, Skillful',
+      'comment2': 'Responsible',
       'numHour': 1,
     };
     matchedList.add(data);
@@ -331,27 +354,29 @@ class InitDBWidget extends StatelessWidget {
       'startDateTime': DateTime.parse('2019-04-01 09:00:00'),
       'focus': 'Strength',
       'completed': true,
-      'userID1': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'Fw4CaMn15mhgEz9OOoav2OEc8cF3',
       'hasCheckIn1' : true,
       'hasCheckIn2' : true,
       'rate1': 3,
       'rate2': 5,
       'feedback1': 'Charlie could use some improvement',
-      'feedback2': 'Alex is amazing',
+      'feedback2': 'Jingyi is amazing',
+      'comment1': 'Helpful',
+      'comment2': 'Punctual',
       'numHour': 1.5,
     };
     matchedList.add(data);
     data = <String, Object>{
       'ID': '6',
       'location': 'The Gym Nation',
-      'startTime': '16:00',
-      'endTime': '18:00',
-      'date': '02/04/2019',
-      'startDateTime': DateTime.parse('2019-04-02 16:00:00'),
+      'startTime': '11:00',
+      'endTime': '13:00',
+      'date': '03/04/2019',
+      'startDateTime': DateTime.parse('2019-04-03 11:00:00'),
       'focus': 'Strength',
       'completed': false,
-      'userID1': 'UCAaloSVi7VYLhfCKnIQA3AbLsw2',
+      'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'pojzyU9QGNXigpTpCzMWI0Z4TaJ3',
       'hasCheckIn1' : false,
       'hasCheckIn2' : false,
@@ -359,6 +384,8 @@ class InitDBWidget extends StatelessWidget {
       'rate2': null,
       'feedback1': '',
       'feedback2': '',
+      'comment1': '',
+      'comment2': '',
       'numHour': 2,
     };
     matchedList.add(data);
@@ -377,6 +404,7 @@ class InitDBWidget extends StatelessWidget {
 
             //Insert Safe-State Data
             DocumentReference docToAdd;
+            
             //insert unmatched sessions
             for (int i = 1; i <= 10; i++) {
               docToAdd =
@@ -396,27 +424,34 @@ class InitDBWidget extends StatelessWidget {
 
             //insert profiles
             docToAdd = Firestore.instance
-                .document('Profile/UCAaloSVi7VYLhfCKnIQA3AbLsw2');
+                .document('Profile/kzqkcPT3ndW5ZAylbD9fJZx8Drr1');
             docToAdd.setData(profileList[0]).whenComplete(() {
+              print("Profile/kzqkcPT3ndW5ZAylbD9fJZx8Drr1 added");
+            }).catchError((e) => print(e));
+
+            docToAdd = Firestore.instance
+                .document('Profile/UCAaloSVi7VYLhfCKnIQA3AbLsw2');
+            docToAdd.setData(profileList[1]).whenComplete(() {
               print("Profile/UCAaloSVi7VYLhfCKnIQA3AbLsw2 added");
             }).catchError((e) => print(e));
 
             docToAdd = Firestore.instance
                 .document('Profile/pojzyU9QGNXigpTpCzMWI0Z4TaJ3');
-            docToAdd.setData(profileList[1]).whenComplete(() {
+            docToAdd.setData(profileList[2]).whenComplete(() {
               print("Profile/pojzyU9QGNXigpTpCzMWI0Z4TaJ3 added");
             }).catchError((e) => print(e));
 
             docToAdd = Firestore.instance
                 .document('Profile/Fw4CaMn15mhgEz9OOoav2OEc8cF3');
-            docToAdd.setData(profileList[2]).whenComplete(() {
+            docToAdd.setData(profileList[3]).whenComplete(() {
               print("Profile/Fw4CaMn15mhgEz9OOoav2OEc8cF3 added");
             }).catchError((e) => print(e));
 
             docToAdd = Firestore.instance
                 .document('Profile/MGIRsDXZWvMAmhDARzFSQyu4MbI3');
-            docToAdd.setData(profileList[3]).whenComplete(() {
+            docToAdd.setData(profileList[4]).whenComplete(() {
               print("Profile/MGIRsDXZWvMAmhDARzFSQyu4MbI3 added");
+              print("Init Complete!");
             }).catchError((e) => print(e));
 
             

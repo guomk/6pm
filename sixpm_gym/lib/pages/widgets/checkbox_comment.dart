@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'global_comment.dart' as globalComment;
 
 class CommentCheckbox extends StatefulWidget {
   @override
@@ -35,6 +36,7 @@ class _CommentCheckboxState extends State<CommentCheckbox> {
                         onChanged: (value) {
                         setState(() {
                           commentValues[key] = value;
+                          globalComment.commentValues[key] = value;
                           });
                         },
                         title: new Text(key),
@@ -55,6 +57,7 @@ class _CommentCheckboxState extends State<CommentCheckbox> {
                           onChanged: (value) {
                         setState(() {
                           commentValues1[key] = value;
+                          globalComment.commentValues[key] = value;
                           });
                         },
                           title: new Text(key),
@@ -70,5 +73,3 @@ class _CommentCheckboxState extends State<CommentCheckbox> {
     );
   }
 }
-
-//Widget getCheckboxWidgets(List<String> strings) {}
