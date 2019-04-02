@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../session/matchedSession.dart';
 import '../globalUserID.dart' as globalUID;
 
+
 class SessionList extends StatefulWidget {
   @override
   SessionListState createState() => new SessionListState();
