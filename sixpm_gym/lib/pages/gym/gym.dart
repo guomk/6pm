@@ -94,12 +94,12 @@ class MapSampleState extends State<GymPage> {
         print(longitude);
       });
     });
-    getGymTiles().then((List Tiles) {
-      setState(() {
-        allTiles = Tiles;
-        print(allTiles[0].distance);
-      });
-    });
+    // getGymTiles().then((List Tiles) {
+    //   setState(() {
+    //     allTiles = Tiles;
+    //     print(allTiles[0].distance);
+    //   });
+    // });
   }
 
   // static CameraPosition _kWestgate = CameraPosition(
@@ -183,7 +183,6 @@ class MapSampleState extends State<GymPage> {
   //     currentLocation = null;
   //   }
   // }
-
   List androidVersionNames = ["Cupcake", "Donut"];
   @override
   Widget build(BuildContext context) {
@@ -270,59 +269,26 @@ class MapSampleState extends State<GymPage> {
                 ],
               )),
           new Expanded(
-              child: ListView.separated(
+              child: new FutureBuilder(
+              future: getGymTiles(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data != null) {
+                    return ListView.separated(
                   separatorBuilder: (context, index) => Divider(
                         color: Colors.black,
                       ),
                   itemCount: 152,
                   itemBuilder: (context, index) =>
-                      makeListTile(allTiles[index]))),
-          //   Align(
-          //     alignment: Alignment.topRight,
-          //     child: Column(
-          //       children: <Widget>[
-          //         SizedBox(height: 16.0),
-          //         FloatingActionButton.extended(
-          //           onPressed: _goToWestgate,
-          //           label: Text('Fitness First Westgate'),
-          //           icon: Icon(Icons.directions_walk),
-          //         ),
-          //         SizedBox(height: 16.0),
-          //         FloatingActionButton(
-          //           onPressed: _onMapTypeButtonPressed,
-          //           materialTapTargetSize: MaterialTapTargetSize.padded,
-          //           backgroundColor: Colors.green,
-          //           child: const Icon(Icons.add_location, size: 36.0),
-          //         ),
-          //         SizedBox(height: 16.0),
-          //         FloatingActionButton(
-          //           onPressed: _onAddMarkerButtonPressed,
-          //           materialTapTargetSize: MaterialTapTargetSize.padded,
-          //           backgroundColor: Colors.green,
-          //           child: const Icon(Icons.add_location, size: 36.0),
-          //         ),
-          //         // SizedBox(height: 16.0),
-          //         // FloatingActionButton.extended(
-          //         //   onPressed: _goToJunction,
-          //         //   label: Text('Fitness First Junction 10!'),
-          //         //   icon: Icon(Icons.directions_walk),
-          //         // ),
-          //         // SizedBox(height: 16.0),
-          //         // FloatingActionButton.extended(
-          //         //   onPressed: _goToBishan,
-          //         //   label: Text('GymBoxx Bishan'),
-          //         //   icon: Icon(Icons.directions_walk),
-          //         // ),
-          //       ],
-          //     ),
-          //   ),
+                      makeListTile(snapshot.data[index]));
+                  }
+                } else {
+                  return Center(child: new CircularProgressIndicator());
+                }
+              }),
+              )
         ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: Text('To the lake!'),
-      //   icon: Icon(Icons.directions_boat),
-      // ),
     );
   }
 }
@@ -387,12 +353,6 @@ Future<List> getGymTiles() async {
     if(des[des.length - 1] == 'T'){
       des = des.substring(0, des.length - 1);
     }
-    // des = des.replaceAll(new RegExp('\n\n'), '\n');
-    // des = des.replaceAll(new RegExp('\n\n\n'), '\n');
-    // des = des.replaceAll(new RegExp('\n\n\n'), '\n');
-    // des = des.replaceAll(new RegExp('\n\n\n\n'), '\n');
-    // des = des.replaceAll(new RegExp('\n\n\n\n\n'), '\n');
-    // des = des.replaceAll(new RegExp('\n\n\n\n\n\n'), '\n');
     var result = GymTile(
       name: gymNames[i],
       postalCode: tdList[7].text,
