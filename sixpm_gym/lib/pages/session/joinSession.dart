@@ -10,7 +10,7 @@ class SessionList extends StatefulWidget {
 
 class SessionListState extends State<SessionList> {
   CollectionReference col = Firestore.instance.collection('UnmatchedSession');
-  String _gender = '';
+  String _gender = '', _level = '';
 
   Future getCurrentGender() async {
     DocumentReference document = Firestore.instance //Get current user gender
@@ -19,6 +19,7 @@ class SessionListState extends State<SessionList> {
     document.get().then((profile) {
       setState(() {
         _gender = profile['gender'];
+        _level = profile['level'];
       });
     });
   }
@@ -41,7 +42,7 @@ class SessionListState extends State<SessionList> {
         switch (snapshot.connectionState) {
           //if takes too long to load, display "loading"
           case ConnectionState.waiting:
-            return new CircularProgressIndicator();
+            return Center(child: new CircularProgressIndicator());
           default:
             docs = snapshot.data.documents; //adds all documents to a list
             //client-side filters
@@ -54,6 +55,11 @@ class SessionListState extends State<SessionList> {
                 ((item['sameGender'] == true) &&
                     (item['userGender'] ==
                         _gender)))); //removes all documents where sameGender == true but userGender != curent gender
+
+            if (_level == 'Newbie')
+            docs.retainWhere((item) =>
+                item['level'] ==
+                'Pro' ); //removes all documents where level = Newbie if the current user is a Newbie
 
             docs.retainWhere((item) => now.isBefore(item[
                 'startDateTime'])); //removes all documents where start datetime is before now

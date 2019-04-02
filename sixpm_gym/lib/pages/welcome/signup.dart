@@ -112,6 +112,9 @@ class _SignupPageState extends State<SignupPage> {
                           if (input.isEmpty) {
                             return 'Please enter your username';
                           }
+                          if (input.length > 10) {
+                            return 'No more than ten characters for username';
+                          }
                         },
                         onSaved: (input) => _username = input,
                         decoration: InputDecoration(
@@ -182,28 +185,6 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
               ),
-
-              // SizedBox(height: 15.0),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Text(
-              //       'New to Spotify?',
-              //       style: TextStyle(
-              //         fontFamily: 'Montserrat',
-              //       ),
-              //     ),
-              //     SizedBox(width: 5.0),
-              //     InkWell(
-              //       child: Text('Register',
-              //           style: TextStyle(
-              //               color: Colors.blue,
-              //               fontFamily: 'Montserrat',
-              //               fontWeight: FontWeight.bold,
-              //               decoration: TextDecoration.underline)),
-              //     )
-              //   ],
-              // )
             ]));
   }
 

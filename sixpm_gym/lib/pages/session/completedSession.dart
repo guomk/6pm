@@ -28,11 +28,13 @@ class CompletedSession extends StatelessWidget {
       return Text(
         'Partner Feedback:\n' + document['feedback1'],
         style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+        overflow: TextOverflow.fade,
       );
     } else {
       return Text(
         'Partner Feedback:\n' + document['feedback2'],
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal,),
+        overflow: TextOverflow.fade,
       );
     }
   }
@@ -69,8 +71,10 @@ class CompletedSession extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-          Card(
+          Container(
             color: Colors.white,
+            height: 350,
+            width: 370,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

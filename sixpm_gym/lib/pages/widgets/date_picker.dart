@@ -69,11 +69,21 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   }
 
   void _changeDatetime(int year, int month, int date) {
+    String _y, _m, _d;
+    _y = year.toString();
+    if (month < 10)
+      _m = '0' + month.toString();
+    else
+      _m = month.toString();
+    if (date < 10)
+      _d = '0' + date.toString();
+    else
+      _d = date.toString();
     setState(() {
       _year = year;
       _month = month;
       _date = date;
-      _datetime = '$year-$month-$date';
+      _datetime = _y + '-' + _m + '-' + _d;
     });
     global.dob = _datetime;
   }

@@ -119,7 +119,7 @@ class SearchSessionState extends State<SearchSession> {
                 );
               }
             } else {
-              return new CircularProgressIndicator();
+              return Center(child: new CircularProgressIndicator());
             }
           });
     }

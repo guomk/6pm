@@ -16,7 +16,7 @@ class _CommentCheckboxState extends State<CommentCheckbox> {
   Map<String, bool> commentValues1 = {
     'Enthusiastic': false,
     'Punctual': false,
-    'Skilful': false,
+    'Skillful': false,
   };
 
   bool flag = false;

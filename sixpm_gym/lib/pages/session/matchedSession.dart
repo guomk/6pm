@@ -26,27 +26,27 @@ class MatchedSession extends StatelessWidget {
 
   Widget _checkInButton(context, allowCheckIn) {
     if (!allowCheckIn) {
-       return Container(
-         height: 40.0,
-         child: Material(
-           borderRadius: BorderRadius.circular(20.0),
-           shadowColor: Colors.blueAccent,
-           color: Colors.grey,
-           elevation: 7.0,
-           child: InkWell(
-             child: Center(
-               child: Text(
-                 'Check In',
-                 style: TextStyle(
-                     color: Colors.blueGrey,
-                     fontWeight: FontWeight.bold,
-                     fontFamily: 'Montserrat'),
-               ),
-             ),
-           ),
-         ),
-       );
-     } else {
+      return Container(
+        height: 40.0,
+        child: Material(
+          borderRadius: BorderRadius.circular(20.0),
+          shadowColor: Colors.blueAccent,
+          color: Colors.grey,
+          elevation: 7.0,
+          child: InkWell(
+            child: Center(
+              child: Text(
+                'Check In',
+                style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat'),
+              ),
+            ),
+          ),
+        ),
+      );
+    } else {
       return Container(
         height: 40.0,
         child: Material(
@@ -58,7 +58,23 @@ class MatchedSession extends StatelessWidget {
             onTap: () {
               print('[Check In] Pressed');
               if (document != null) {
-                //TODO UPDATE HASCHECKIN 
+                bool partnerIsID1;
+                if (globalUID.uid == document['userID1']) //Partner is UserID2
+                  partnerIsID1 = false;
+                else //Partner is UserID1
+                  partnerIsID1 = true;
+
+                if (partnerIsID1)
+                  document.reference
+                      .updateData({'hasCheckIn2': true})
+                      .whenComplete(() {})
+                      .catchError((e) => print(e));
+                else
+                  document.reference
+                      .updateData({'hasCheckIn1': true})
+                      .whenComplete(() {})
+                      .catchError((e) => print(e));
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -78,7 +94,7 @@ class MatchedSession extends StatelessWidget {
           ),
         ),
       );
-     }
+    }
   }
 
   void _confirmCancelDialog(context) {

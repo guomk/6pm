@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import './mySessions.dart';
+import '../widgets/init_db.dart';
+import '../widgets/clear_db.dart';
 
 class MyProfile extends StatefulWidget {
   final FirebaseUser user;
@@ -77,7 +80,7 @@ class _MyProfileState extends State<MyProfile> {
                                           snapshot.data['username'],
                                           style: TextStyle(
                                               fontFamily: 'Montserrat',
-                                              fontSize: 25.0,
+                                              fontSize: 22.0,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(width: 7.0),
@@ -132,7 +135,7 @@ class _MyProfileState extends State<MyProfile> {
                                   ),
                                   Text(
                                     snapshot.data['currentRating']
-                                        .toString(), //TODO IF LESS THAN 3-5 SESSIONS, DONT SHOW RATING
+                                        .toStringAsFixed(2),
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 20.0),
@@ -143,7 +146,7 @@ class _MyProfileState extends State<MyProfile> {
                           ),
                         ),
                         SizedBox(
-                          height: 40.0,
+                          height: 10.0,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +219,40 @@ class _MyProfileState extends State<MyProfile> {
                           ],
                         ),
                         SizedBox(
-                          height: 55.0,
+                          height: 15.0,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MySession(
+                                          user: user,
+                                        )));
+                          },
+                          child: Card(
+                            child: Container(
+                              height: 70,
+                              width: 280,
+                              padding: EdgeInsets.all(7.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.event_busy),
+                                  SizedBox(height: 4.0),
+                                  Text(
+                                    'Unmatched Sessions',
+                                    style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 20.0),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
                         ),
                         Container(
                           height: 30.0,
@@ -240,6 +276,11 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ),
                         ),
+                        Row(children: <Widget>[
+                          //NOTE COMMENT THIS ROW WHEN PRESENTING
+                          ClearDBWidget(),
+                          InitDBWidget(),
+                        ])
                       ],
                     )
 
@@ -249,7 +290,9 @@ class _MyProfileState extends State<MyProfile> {
               );
             }
           } else {
-            return new CircularProgressIndicator();
+            return new Center(
+              child: CircularProgressIndicator(),
+            );
           }
         });
   }
