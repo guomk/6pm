@@ -23,11 +23,6 @@ class GymInfoPageState extends State<GymInfoPage> {
     mapController = controller;
   }
 
-  static CameraPosition _kSingapore = CameraPosition(
-    target: LatLng(1.3521, 103.8198),
-    zoom: 10,
-  );
-
   String kmlContent;
   double latitude;
   double longitude;
@@ -60,12 +55,19 @@ class GymInfoPageState extends State<GymInfoPage> {
 
   MapType _currentMapType = MapType.normal;
 
-  List androidVersionNames = ["Cupcake", "Donut"];
+  Widget _tileDesc(GymTile tile) {
+    if (tile.description == '<Null>')
+      return Text('No additional information available.',
+          style: new TextStyle(color: Colors.black));
+    else
+      return Text(tile.description, style: new TextStyle(color: Colors.black));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Search for Gyms'),
+        title: Text(tile.name, overflow: TextOverflow.fade),
       ),
       body: Column(
         children: <Widget>[
@@ -74,7 +76,10 @@ class GymInfoPageState extends State<GymInfoPage> {
             width: 500,
             child: GoogleMap(
               mapType: _currentMapType,
-              initialCameraPosition: _kSingapore,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(tile.latitude, tile.longitude),
+                zoom: 14,
+              ),
               myLocationEnabled: true,
               onMapCreated: _onMapCreated,
               markers: _markers,
@@ -90,11 +95,10 @@ class GymInfoPageState extends State<GymInfoPage> {
                         style:
                             new TextStyle(color: Colors.black, fontSize: 24.0)),
                     SizedBox(height: 16.0),
-                    Text("Distance: " + tile.distance.toString() + "km",
+                    Text("Distance: " + tile.distance.toStringAsFixed(2) + "km",
                         style: new TextStyle(color: Colors.black)),
                     SizedBox(height: 16.0),
-                    Text(tile.description,
-                        style: new TextStyle(color: Colors.black)),
+                    _tileDesc(tile),
                   ],
                 ),
               )),

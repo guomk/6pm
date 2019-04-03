@@ -192,7 +192,7 @@ class CreateSessionState extends State<CreateSession> {
                         Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SearchSession()))
+                                    builder: (context) => SearchSession(storage: GymStorage())))
                             .then((location) {
                           if (location != null) _location = location.toString();
                         });
