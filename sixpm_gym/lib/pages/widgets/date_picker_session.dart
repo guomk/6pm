@@ -59,8 +59,6 @@ class DatePickerSessionState extends State<DatePickerSession> {
       locale: _lang,
       dateFormat: _format,
       onChanged: (year, month, date) {
-        debugPrint('onChanged date: $date/$month/$year');
-
         if (!showTitleActions) {
           _changeDatetime(year, month, date);
         }
@@ -120,15 +118,12 @@ class DatePickerSessionState extends State<DatePickerSession> {
           ),
         ),
         Container(
-          // padding: EdgeInsets.only(left: 30.0),
           child: IconButton(
             onPressed: _showDatePicker,
             icon: Icon(Icons.today),
           ),
         ),
       ],
-
-      // Selected dat
     );
   }
 }

@@ -62,8 +62,6 @@ class _SignupPageState extends State<SignupPage> {
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey),
-                            // hintText: 'EMAIL',
-                            // hintStyle: ,
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.blue))),
                       ),
@@ -136,10 +134,6 @@ class _SignupPageState extends State<SignupPage> {
                           elevation: 7.0,
                           child: InkWell(
                             onTap: signUp,
-                            // onTap: () {
-                            //   print('[Register] Pressed');
-                            //   Navigator.of(context).pushNamed('/signup2');
-                            // },
                             child: Center(
                               child: Text(
                                 'Register',
@@ -166,7 +160,6 @@ class _SignupPageState extends State<SignupPage> {
                               borderRadius: BorderRadius.circular(20.0)),
                           child: InkWell(
                             onTap: () {
-                              print('[Go Back] Pressed');
                               Navigator.of(context).pop();
                             },
                             child: Center(
@@ -192,8 +185,6 @@ class _SignupPageState extends State<SignupPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      debugPrint(_email);
-      debugPrint(_password);
       try {
         FirebaseUser user = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _password);
@@ -213,7 +204,6 @@ class _SignupPageState extends State<SignupPage> {
                   title: Text('The email has been used'),
                   content: Text('Please use another email to register for 6pm'),
                 ));
-        print('Wrong account');
         print(e.message);
       }
     }

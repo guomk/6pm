@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import './mySessions.dart';
 import '../widgets/init_db.dart';
 import '../widgets/clear_db.dart';
 
@@ -13,7 +12,6 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  // List<String> items = ['1', '2', '3'];
   final FirebaseUser user;
   _MyProfileState(this.user);
 
@@ -59,9 +57,6 @@ class _MyProfileState extends State<MyProfile> {
                                   width: 120.0,
                                   height: 120.0,
                                   child: InkWell(
-                                    onTap: () {
-                                      print('[Avatar] Tapped');
-                                    },
                                     child: null,
                                   ),
                                 ),
@@ -129,7 +124,10 @@ class _MyProfileState extends State<MyProfile> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(Icons.star),
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.orange[300],
+                                  ),
                                   SizedBox(
                                     width: 8.0,
                                   ),
@@ -169,7 +167,8 @@ class _MyProfileState extends State<MyProfile> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Icon(Icons.favorite_border),
+                                      Icon(Icons.favorite_border,
+                                          color: Colors.blue),
                                       SizedBox(height: 4.0),
                                       Text(
                                         'Interest',
@@ -203,7 +202,8 @@ class _MyProfileState extends State<MyProfile> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Icon(Icons.accessibility_new),
+                                      Icon(Icons.accessibility_new,
+                                          color: Colors.blue),
                                       SizedBox(height: 4.0),
                                       Text(
                                         'Strength',
@@ -233,7 +233,10 @@ class _MyProfileState extends State<MyProfile> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(Icons.event_busy),
+                                  Icon(
+                                    Icons.event_busy,
+                                    color: Colors.red,
+                                  ),
                                   SizedBox(height: 4.0),
                                   Text(
                                     'Unmatched Sessions',
@@ -271,15 +274,13 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ),
                         ),
-                        Row(children: <Widget>[
+                        //Row(children: <Widget>[
                           //NOTE COMMENT THIS ROW WHEN PRESENTING
-                          ClearDBWidget(),
-                          InitDBWidget(),
-                        ])
+                        //ClearDBWidget(),
+                        //InitDBWidget(),
+                        //])
                       ],
                     )
-
-                    // SizedBox(child: -20.0,)
                   ],
                 ),
               );

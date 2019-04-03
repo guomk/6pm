@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import './gym.dart';
 
 class WeatherPage extends StatefulWidget {
   @override
@@ -40,10 +39,11 @@ class WeatherPageState extends State<WeatherPage> {
                 SizedBox(height: 16.0),
                 Text('Sunny',
                     style: new TextStyle(color: Colors.black, fontSize: 32.0)),
-                    SizedBox(height: 16.0),
+                SizedBox(height: 16.0),
                 Text('29°C', style: new TextStyle(color: Colors.black)),
                 Image.network('https://openweathermap.org/img/w/01d.png'),
-                Text('April 3, 2019', style: new TextStyle(color: Colors.black)),
+                Text('April 3, 2019',
+                    style: new TextStyle(color: Colors.black)),
               ],
             ),
           )),
@@ -55,9 +55,6 @@ class WeatherPageState extends State<WeatherPage> {
             mapType: _currentMapType,
             initialCameraPosition: _kSingapore,
             myLocationEnabled: true,
-            // onMapCreated: (GoogleMapController controller) {
-            //   // _controller.complete(controller);
-            // },
             onMapCreated: _onMapCreated,
             markers: _markers,
           ),

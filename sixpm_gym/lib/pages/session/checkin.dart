@@ -33,46 +33,47 @@ class SessionCheckInState extends State<SessionCheckIn>
     else //Partner is UserID1
       partnerIsID1 = true;
 
-    if (!_sessionStarted){
-    return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-                title: new Text('Cancel check in'),
-                content:
-                    new Text('Are you sure you want to cancel your check in?'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: new Text('No'),
-                  ),
-                  new FlatButton(
-                    onPressed: () {
-                      if (partnerIsID1)
-                        document.reference
-                            .updateData({'hasCheckIn2': false}).whenComplete(() {
-                          Navigator.of(context).pop(true);
-                        }).catchError((e) => print(e));
-                      else
-                        document.reference
-                            .updateData({'hasCheckIn1': false}).whenComplete(() {
-                          Navigator.of(context).pop(true);
-                        }).catchError((e) => print(e));
-                    },
-                    child: new Text('Yes'),
-                  ),
-                ],
-              ),
-        ) ??
-        false;
-    }
-    else{
+    if (!_sessionStarted) {
+      //Session has not started, user still can cancel check-in
+      return showDialog(
+            context: context,
+            builder: (context) => new AlertDialog(
+                  title: new Text('Cancel check in'),
+                  content: new Text(
+                      'Are you sure you want to cancel your check in?'),
+                  actions: <Widget>[
+                    new FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: new Text('No'),
+                    ),
+                    new FlatButton(
+                      onPressed: () {
+                        if (partnerIsID1)
+                          document.reference.updateData(
+                              {'hasCheckIn2': false}).whenComplete(() {
+                            Navigator.of(context).pop(true);
+                          }).catchError((e) => print(e));
+                        else
+                          document.reference.updateData(
+                              {'hasCheckIn1': false}).whenComplete(() {
+                            Navigator.of(context).pop(true);
+                          }).catchError((e) => print(e));
+                      },
+                      child: new Text('Yes'),
+                    ),
+                  ],
+                ),
+          ) ??
+          false;
+    } else {
+      //Session already started, cannot cancel
       return showDialog(
         context: context,
         builder: (BuildContext context) {
-          // return object of type Dialog
           return AlertDialog(
             title: new Text("Error!"),
-            content: new Text("You cannot cancel a check in after the session has started!\n\nPlease finish the session."),
+            content: new Text(
+                "You cannot cancel a check in after the session has started!\n\nPlease finish the session."),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("Okay"),
@@ -117,7 +118,7 @@ class SessionCheckInState extends State<SessionCheckIn>
               if (!_sessionStarted) {
                 if (sessionDoc['hasCheckIn1'] == true &&
                     sessionDoc['hasCheckIn2'] == true) {
-                  //Both users have checked in
+                  //Both users have checked in but session has not started
                   return Container(
                     height: 40.0,
                     width: 200,
@@ -128,7 +129,6 @@ class SessionCheckInState extends State<SessionCheckIn>
                       elevation: 7.0,
                       child: InkWell(
                         onTap: () {
-                          print('[Start] Pressed');
                           if (!animationController.isAnimating)
                             animationController.reverse(
                                 from: animationController.value == 0.0
@@ -151,6 +151,7 @@ class SessionCheckInState extends State<SessionCheckIn>
                     ),
                   );
                 } else {
+                  //Partner has not checked in, unable to start session
                   return Container(
                     height: 40.0,
                     width: 200,
@@ -174,6 +175,7 @@ class SessionCheckInState extends State<SessionCheckIn>
                   );
                 }
               } else {
+                //Session started
                 return Container(
                   height: 40.0,
                   width: 200,
@@ -184,8 +186,6 @@ class SessionCheckInState extends State<SessionCheckIn>
                     elevation: 7.0,
                     child: InkWell(
                       onTap: () {
-                        print('[Finish] Pressed');
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -236,21 +236,21 @@ class SessionCheckInState extends State<SessionCheckIn>
                         if (!_sessionStarted) {
                           if (sessionDoc['hasCheckIn1'] == true &&
                               sessionDoc['hasCheckIn2'] == true) {
-                            //Both users have checked in
+                            //Both users have checked in but session has not started
                             return new Text(
                               'Ready to Start Session!',
                               style: TextStyle(
                                   fontSize: 25.0, fontWeight: FontWeight.bold),
                             );
                           } else {
-                            //Both users have checked in
+                            //Partner has not checked in
                             return new Text(
                               'Waiting for partner to check in...',
                               style: TextStyle(
                                   fontSize: 25.0, fontWeight: FontWeight.bold),
                             );
                           }
-                        } else
+                        } else //session started
                           return new Text(
                             'Start Exercising!',
                             style: TextStyle(
@@ -260,6 +260,7 @@ class SessionCheckInState extends State<SessionCheckIn>
                     }),
               ),
               Expanded(
+                //Show timer
                 child: Align(
                   alignment: FractionalOffset.center,
                   child: AspectRatio(

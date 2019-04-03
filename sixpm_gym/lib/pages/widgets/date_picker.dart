@@ -56,8 +56,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       locale: _lang,
       dateFormat: _format,
       onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
-
         if (!showTitleActions) {
           _changeDatetime(year, month, date);
         }
@@ -113,61 +111,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           ),
         ),
         Container(
-          // padding: EdgeInsets.only(left: 30.0),
           child: IconButton(
             onPressed: _showDatePicker,
             icon: Icon(Icons.today),
           ),
         ),
       ],
-
-      // Selected dat
     );
   }
 }
-
-// show title actions checkbox
-// Row(
-//   children: <Widget>[
-//     Text(
-//       'Show title actions',
-//       style: TextStyle(fontSize: 16.0),
-//     ),
-//     Checkbox(
-//       value: _showTitleActions,
-//       onChanged: (value) {
-//         setState(() {
-//           _showTitleActions = value;
-//         });
-//       },
-//     )
-//   ],
-// ),
-
-// Language input field
-// TextField(
-//   controller: _langCtrl,
-//   keyboardType: TextInputType.url,
-//   decoration: InputDecoration(
-//     labelText: 'Language',
-//     hintText: 'en / zh ...',
-//     hintStyle: TextStyle(color: Colors.black26),
-//   ),
-//   onChanged: (value) {
-//     _lang = value;
-//   },
-// ),
-
-// Formatter input field
-// TextField(
-//   controller: _formatCtrl,
-//   keyboardType: TextInputType.url,
-//   decoration: InputDecoration(
-//     labelText: 'Formatter',
-//     hintText: 'yyyy-mm-dd / yyyy-mmm-dd / yyyy-mmmm-dd',
-//     hintStyle: TextStyle(color: Colors.black26),
-//   ),
-//   onChanged: (value) {
-//     _format = value;
-//   },
-// ),

@@ -8,5 +8,14 @@ class GymTile {
   String description;
   double latitude;
   double longitude;
-  GymTile({this.name, this.distance, this.postalCode, this.address, this.description, this.latitude, this.longitude});
+  
+  GymTile({
+      this.name,
+      this.distance,
+      this.postalCode,
+      this.address,
+      this.description,
+      this.latitude,
+      this.longitude
+      });
 }
