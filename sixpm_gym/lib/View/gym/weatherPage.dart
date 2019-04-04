@@ -50,99 +50,100 @@ class WeatherPageState extends State<WeatherPage> {
                     if (snapshot.data != null) {
                       weatherList = snapshot.data;
 
-                      //Add weather markers
-                      for (int i = 0; i < weatherList.length; i++) {
-                        Weather weather = weatherList[i];
-                        _markers.add(Marker(
-                          // This marker id can be anything that uniquely identifies each marker.
-                          markerId: MarkerId(i.toString()),
-                          position: LatLng(weather.latitude, weather.longitude),
-                          infoWindow: InfoWindow(
-                            title: weather.name,
-                            snippet: weather.forecast,
-                          ),
-                          icon: BitmapDescriptor.defaultMarkerWithHue(
-                              BitmapDescriptor.hueBlue),
-                        ));
-                      }
-                      return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                                height: 250,
-                                width: 500,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: new FutureBuilder(
-                                        future: getNearestWeather(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot snapshot) {
-                                          if (snapshot.hasData) {
-                                            if (snapshot.data != null) {
-                                              return Column(
-                                                children: <Widget>[
-                                                  SizedBox(height: 16.0),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: <Widget>[
-                                                    Icon(Icons.location_on),
-                                                    Text(snapshot.data.name,
-                                                        style: new TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 28.0)),
-                                                  ]),
-                                                  SizedBox(height: 16.0),
-                                                  Text(snapshot.data.forecast,
-                                                      style: new TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 32.0)),
-                                                  SizedBox(height: 16.0),
-                                                  Text(
-                                                      now.day.toString() +
-                                                          '/' +
-                                                          now.month.toString() +
-                                                          '/' +
-                                                          now.year.toString(),
-                                                      style: new TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 28.0)),
-                                                ],
-                                              );
-                                            }
-                                          } else {
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }
-                                        }))),
-                            Stack(children: <Widget>[
-                              Container(
-                                height: 295,
-                                width: 500,
-                                child: GoogleMap(
-                                  mapType: _currentMapType,
-                                  initialCameraPosition: CameraPosition(
-                                    target: LatLng(1.3521, 103.8198),
-                                    zoom: 10,
+                      return FutureBuilder(
+                          future: getNearestWeather(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data != null) {
+                                _markers.add(Marker(
+                                  // This marker id can be anything that uniquely identifies each marker.
+                                  markerId: MarkerId('1'),
+                                  position: LatLng(snapshot.data.latitude,
+                                      snapshot.data.longitude),
+                                  infoWindow: InfoWindow(
+                                    title: snapshot.data.name,
+                                    snippet: snapshot.data.forecast,
                                   ),
-                                  myLocationEnabled: true,
-                                  onMapCreated: _onMapCreated,
-                                  markers: _markers,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: IconButton(
-                                  icon: new Icon(Icons.search),
-                                  tooltip: 'Refresh',
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed('/gympage');
-                                  },
-                                  color: Colors.black,
-                                ),
-                              )
-                            ])
-                          ]);
+                                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                                      BitmapDescriptor.hueBlue),
+                                ));
+                                return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Container(
+                                          height: 250,
+                                          width: 500,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: new Column(
+                                              children: <Widget>[
+                                                SizedBox(height: 16.0),
+                                                Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Icon(Icons.location_on),
+                                                      Text(snapshot.data.name,
+                                                          style: new TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 28.0)),
+                                                    ]),
+                                                SizedBox(height: 16.0),
+                                                Text(snapshot.data.forecast,
+                                                    style: new TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 32.0)),
+                                                SizedBox(height: 16.0),
+                                                Text(
+                                                    now.day.toString() +
+                                                        '/' +
+                                                        now.month.toString() +
+                                                        '/' +
+                                                        now.year.toString(),
+                                                    style: new TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 28.0)),
+                                              ],
+                                            ),
+                                          )),
+                                      Stack(children: <Widget>[
+                                        Container(
+                                          height: 295,
+                                          width: 500,
+                                          child: GoogleMap(
+                                            mapType: _currentMapType,
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                              target: LatLng(1.3521, 103.8198),
+                                              zoom: 10,
+                                            ),
+                                            myLocationEnabled: true,
+                                            onMapCreated: _onMapCreated,
+                                            markers: _markers,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: IconButton(
+                                            icon: new Icon(Icons.search),
+                                            tooltip: 'Refresh',
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .pushNamed('/gympage');
+                                            },
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ]),
+                                    ]);
+                              }
+                            } else {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                          });
                     }
                   } else {
                     return Center(child: CircularProgressIndicator());

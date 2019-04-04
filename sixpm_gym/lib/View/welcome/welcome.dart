@@ -97,7 +97,7 @@ class _MyHomePageState extends State<WelcomePage> {
                               SizedBox(height: 20.0),
                               TextFormField(
                                 validator: (input) {
-                                  if (input.isEmpty {
+                                  if (input.isEmpty) {
                                     return 'Please enter your password';
                                   }
                                 },
