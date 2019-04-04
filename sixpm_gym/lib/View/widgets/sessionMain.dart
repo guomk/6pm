@@ -159,79 +159,84 @@ class SessionListState extends State<SessionList> {
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                            document['date'] +
-                                                ', ' +
-                                                document['startTime'] +
-                                                ' - ' +
-                                                document['endTime'],
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold)),
+                                          document['date'] +
+                                              ', ' +
+                                              document['startTime'] +
+                                              ' - ' +
+                                              document['endTime'],
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                         Container(
-                                            child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            Container(
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Container(
+                                                  height: 40.0,
+                                                  width: 125.0,
+                                                  color: Colors.transparent,
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.black,
+                                                              style: BorderStyle
+                                                                  .solid,
+                                                              width: 1.0),
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.0)),
+                                                      child: Center(
+                                                        child: Text(
+                                                            document[
+                                                                'location'],
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .clip,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ))),
+                                              Container(
                                                 height: 40.0,
                                                 width: 125.0,
                                                 color: Colors.transparent,
                                                 child: Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            style: BorderStyle
-                                                                .solid,
-                                                            width: 1.0),
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    20.0)),
-                                                    child: Center(
-                                                      child: Text(
-                                                          document['location'],
-                                                          overflow:
-                                                              TextOverflow.clip,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                    ))),
-                                            Container(
-                                                height: 40.0,
-                                                width: 125.0,
-                                                color: Colors.transparent,
-                                                child: Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            style: BorderStyle
-                                                                .solid,
-                                                            width: 1.0),
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    20.0)),
-                                                    child: Center(
-                                                      child: Text(
-                                                          document['focus'],
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                    ))),
-                                          ],
-                                        ))
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.black,
+                                                          style:
+                                                              BorderStyle.solid,
+                                                          width: 1.0),
+                                                      color: Colors.transparent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.0)),
+                                                  child: Center(
+                                                    child: Text(
+                                                        document['focus'],
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                   )
@@ -241,7 +246,8 @@ class SessionListState extends State<SessionList> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MatchedSessionPage(document))); //Sends current session document to matchedSession page
+                                        builder: (context) => MatchedSessionPage(
+                                            document))); //Sends current session document to matchedSession page
                               },
                             ),
                           ));
