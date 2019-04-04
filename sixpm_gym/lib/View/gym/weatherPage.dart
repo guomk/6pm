@@ -47,7 +47,7 @@ class WeatherPageState extends State<WeatherPage> {
                 future: fetchWeather(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data != null) {
+                    if (snapshot.data.length == 47) {
                       weatherList = snapshot.data;
 
                       return FutureBuilder(
