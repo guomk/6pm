@@ -8,7 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geolocator/geolocator.dart' as geo;
-// import 'package:location/location.dart' as loc;
+import 'package:location/location.dart' as loc;
 import 'gymInfo.dart';
 
 class GymPage extends StatefulWidget {
