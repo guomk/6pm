@@ -97,8 +97,8 @@ class _MyHomePageState extends State<WelcomePage> {
                               SizedBox(height: 20.0),
                               TextFormField(
                                 validator: (input) {
-                                  if (input.length < 6) {
-                                    return 'Password is too short';
+                                  if (input.isEmpty {
+                                    return 'Please enter your password';
                                   }
                                 },
                                 onSaved: (input) => _password = input,
