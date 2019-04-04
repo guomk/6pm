@@ -1,2 +1,4 @@
 
 sixpm_gym/pubspec\.lock
+
+*.lock
