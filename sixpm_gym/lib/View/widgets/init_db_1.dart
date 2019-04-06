@@ -1,6 +1,9 @@
 //INSERT TEST ENTRIES INTO MATCHEDSESSION, UNMATCHEDSESSION, PROFILE
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sixpm_gym/Model/MatchedSession.dart';
+import 'package:sixpm_gym/Model/UnmatchedSession.dart';
+import 'package:sixpm_gym/Model/globals_session.dart' as globals;
 
 class InitDBWidget extends StatelessWidget {
   final CollectionReference profileCollection =
@@ -99,8 +102,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'ClubFITT - Bedok',
       'startTime': '13:00',
       'endTime': '14:00',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 13:00:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 13:00:00'),
       'level': 'Newbie',
       'focus': 'HIIT',
       'sameGender': false,
@@ -115,8 +118,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Bikram Yoga',
       'startTime': '15:00',
       'endTime': '17:00',
-      'date': '04/04/2019',
-      'startDateTime': DateTime.parse('2019-04-04 15:00:00'),
+      'date': '08/04/2019',
+      'startDateTime': DateTime.parse('2019-04-08 15:00:00'),
       'level': 'Newbie',
       'focus': 'Yoga',
       'sameGender': true,
@@ -131,8 +134,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Jagsport',
       'startTime': '11:00',
       'endTime': '13:00',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 11:00:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 11:00:00'),
       'level': 'Pro',
       'focus': 'Boxing',
       'sameGender': false,
@@ -147,8 +150,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Pilates Flow',
       'startTime': '10:00',
       'endTime': '11:00',
-      'date': '04/04/2019',
-      'startDateTime': DateTime.parse('2019-04-04 10:00:00'),
+      'date': '08/04/2019',
+      'startDateTime': DateTime.parse('2019-04-08 10:00:00'),
       'level': 'Newbie',
       'focus': 'Aerobics',
       'sameGender': true,
@@ -163,8 +166,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'The Pit',
       'startTime': '10:00',
       'endTime': '12:00',
-      'date': '04/04/2019',
-      'startDateTime': DateTime.parse('2019-04-04 10:00:00'),
+      'date': '08/04/2019',
+      'startDateTime': DateTime.parse('2019-04-08 10:00:00'),
       'level': 'Pro',
       'focus': 'Strength',
       'sameGender': false,
@@ -179,8 +182,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Yaatra',
       'startTime': '16:00',
       'endTime': '17:00',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 16:00:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 16:00:00'),
       'level': 'Pro',
       'focus': 'Burpees',
       'sameGender': true,
@@ -195,8 +198,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'True Fitness - Suntec City',
       'startTime': '06:00',
       'endTime': '10:00',
-      'date': '04/04/2019',
-      'startDateTime': DateTime.parse('2019-04-04 06:00:00'),
+      'date': '08/04/2019',
+      'startDateTime': DateTime.parse('2019-04-08 06:00:00'),
       'level': 'Pro',
       'focus': 'HIIT',
       'sameGender': false,
@@ -211,8 +214,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Platinum Yoga',
       'startTime': '19:00',
       'endTime': '21:00',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 19:00:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 19:00:00'),
       'level': 'Pro',
       'focus': 'Yoga',
       'sameGender': true,
@@ -227,8 +230,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Impakt Singapore',
       'startTime': '11:30',
       'endTime': '13:00',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 11:30:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 11:30:00'),
       'level': 'Newbie',
       'focus': 'Strength',
       'sameGender': false,
@@ -243,8 +246,8 @@ class InitDBWidget extends StatelessWidget {
       'location': 'Evolve MMA - POMO Mall',
       'startTime': '11:30',
       'endTime': '12:30',
-      'date': '03/04/2019',
-      'startDateTime': DateTime.parse('2019-04-03 11:30:00'),
+      'date': '07/04/2019',
+      'startDateTime': DateTime.parse('2019-04-07 11:30:00'),
       'level': 'Pro',
       'focus': 'Strength',
       'sameGender': true,
@@ -254,7 +257,8 @@ class InitDBWidget extends StatelessWidget {
       'numHour': 1,
     };
     unmatchedList.add(data);
-    
+
+    addUnmatchedSessions() {}
 
     //Matched Sessions
     data = <String, Object>{
@@ -268,14 +272,16 @@ class InitDBWidget extends StatelessWidget {
       'completed': true,
       'userID1': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
       'userID2': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
-      'hasCheckIn1' : true,
-      'hasCheckIn2' : true,
+      'hasCheckIn1': true,
+      'hasCheckIn2': true,
       'rate1': 5,
       'rate2': 5,
       'feedback1': 'I\'m so glad I found Jingyi through this app!',
       'feedback2': 'Debbie is a pretty good partner',
-      'comment1': 'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
-      'comment2': 'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
+      'comment1':
+          'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
+      'comment2':
+          'Helpful, Considerate, Responsible, Enthusiastic, Punctual, Skillful',
       'numHour': 2,
     };
     matchedList.add(data);
@@ -290,8 +296,8 @@ class InitDBWidget extends StatelessWidget {
       'completed': true,
       'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
-      'hasCheckIn1' : true,
-      'hasCheckIn2' : true,
+      'hasCheckIn1': true,
+      'hasCheckIn2': true,
       'rate1': 4,
       'rate2': 5,
       'feedback1': 'Debbie is pretty decent',
@@ -312,8 +318,8 @@ class InitDBWidget extends StatelessWidget {
       'completed': true,
       'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'MGIRsDXZWvMAmhDARzFSQyu4MbI3',
-      'hasCheckIn1' : true,
-      'hasCheckIn2' : true,
+      'hasCheckIn1': true,
+      'hasCheckIn2': true,
       'rate1': 5,
       'rate2': 5,
       'feedback1': 'I really enjoy doing aerobics with Debbie',
@@ -334,8 +340,8 @@ class InitDBWidget extends StatelessWidget {
       'completed': true,
       'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'Fw4CaMn15mhgEz9OOoav2OEc8cF3',
-      'hasCheckIn1' : true,
-      'hasCheckIn2' : true,
+      'hasCheckIn1': true,
+      'hasCheckIn2': true,
       'rate1': 2,
       'rate2': 4,
       'feedback1': 'Charlie kinda sucks',
@@ -356,8 +362,8 @@ class InitDBWidget extends StatelessWidget {
       'completed': true,
       'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'Fw4CaMn15mhgEz9OOoav2OEc8cF3',
-      'hasCheckIn1' : true,
-      'hasCheckIn2' : true,
+      'hasCheckIn1': true,
+      'hasCheckIn2': true,
       'rate1': 3,
       'rate2': 5,
       'feedback1': 'Charlie could use some improvement',
@@ -372,14 +378,14 @@ class InitDBWidget extends StatelessWidget {
       'location': 'The Gym Nation',
       'startTime': '11:00',
       'endTime': '13:00',
-      'date': '06/04/2019',
-      'startDateTime': DateTime.parse('2019-04-06 11:00:00'),
+      'date': '08/04/2019',
+      'startDateTime': DateTime.parse('2019-04-08 11:00:00'),
       'focus': 'Strength',
       'completed': false,
       'userID1': 'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
       'userID2': 'pojzyU9QGNXigpTpCzMWI0Z4TaJ3',
-      'hasCheckIn1' : false,
-      'hasCheckIn2' : false,
+      'hasCheckIn1': false,
+      'hasCheckIn2': false,
       'rate1': null,
       'rate2': null,
       'feedback1': '',
@@ -389,6 +395,23 @@ class InitDBWidget extends StatelessWidget {
       'numHour': 2,
     };
     matchedList.add(data);
+
+    addMatchedSessions() {
+      globals.matchedList.clear();
+      MatchedSession ms6 = new MatchedSession(
+          'The Gym Nation',
+          'kzqkcPT3ndW5ZAylbD9fJZx8Drr1',
+          'pojzyU9QGNXigpTpCzMWI0Z4TaJ3',
+          'Strength',
+          '08/04/2019',
+          '11:00',
+          '13:00',
+          Timestamp.fromDate(DateTime.parse('2019-04-08 11:00:00')),
+          2,
+          6);
+          
+          globals.matchedList.add(ms6);
+    }
 
     return Container(
       padding: EdgeInsets.fromLTRB(50, 20, 0, 0),
@@ -401,15 +424,14 @@ class InitDBWidget extends StatelessWidget {
         elevation: 7.0,
         child: InkWell(
           onTap: () {
-
             //Insert Safe-State Data
             DocumentReference docToAdd;
-            
+
             //insert unmatched sessions
             for (int i = 1; i <= 10; i++) {
               docToAdd =
                   Firestore.instance.document('UnmatchedSession/session$i');
-              docToAdd.setData(unmatchedList[i-1]).whenComplete(() {
+              docToAdd.setData(unmatchedList[i - 1]).whenComplete(() {
                 print("UnmatchedSession/session$i added");
               }).catchError((e) => print(e));
             }
@@ -417,7 +439,7 @@ class InitDBWidget extends StatelessWidget {
             for (int i = 1; i <= 6; i++) {
               docToAdd =
                   Firestore.instance.document('MatchedSession/session$i');
-              docToAdd.setData(matchedList[i-1]).whenComplete(() {
+              docToAdd.setData(matchedList[i - 1]).whenComplete(() {
                 print("MatchedSession/session$i added");
               }).catchError((e) => print(e));
             }
@@ -454,7 +476,10 @@ class InitDBWidget extends StatelessWidget {
               print("Init Complete!");
             }).catchError((e) => print(e));
 
-            
+            //Insert matched sessions into global list
+            addMatchedSessions();
+            //Insert unmatched sessions into global list
+            addUnmatchedSessions();
           },
           child: Center(
               child: Text(

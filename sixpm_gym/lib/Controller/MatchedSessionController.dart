@@ -32,7 +32,7 @@ class MatchedSessionController {
     });
     highestID++; //increment highest ID to set new document ID
 
-    //Create new unmatched session
+    //Create new matched session
     newMatchedSession = new MatchedSession(
         unmatchedDocument['location'],
         unmatchedDocument['userID'],
@@ -58,46 +58,47 @@ class MatchedSessionController {
     print("Match Success...");
   }
 
-  void deleteMatchedSession(MatchedSession ms) {
-    ms.docRef.delete();
+  void deleteMatchedSession(DocumentSnapshot matchedDoc) {
+    for (MatchedSession ms in globals.matchedList) {
+      if (ms.id == matchedDoc['ID']) 
     ms = null;
+    }
+    matchedDoc.reference.delete();
   }
 
-  void checkIn1(bool hasCheckIn, MatchedSession ms) {
+  void checkIn1(bool hasCheckIn, DocumentSnapshot matchedDoc) {
     if (hasCheckIn) {
-      ms.hasCheckIn1 = true;
-      ms.docRef
+      //ms.hasCheckIn1 = true;
+      matchedDoc.reference
           .updateData({'hasCheckIn1': true})
           .whenComplete(() {})
           .catchError((e) => print(e));
     } else {
-      ms.hasCheckIn1 = false;
-      ms.docRef
+      //ms.hasCheckIn1 = false;
+      matchedDoc.reference
           .updateData({'hasCheckIn1': false})
           .whenComplete(() {})
           .catchError((e) => print(e));
     }
   }
 
-  void checkIn2(bool hasCheckIn, MatchedSession ms) {
+  void checkIn2(bool hasCheckIn, DocumentSnapshot matchedDoc) {
     if (hasCheckIn) {
-      ms.hasCheckIn2 = true;
-      ms.docRef
+      matchedDoc.reference
           .updateData({'hasCheckIn2': true})
           .whenComplete(() {})
           .catchError((e) => print(e));
     } else {
-      ms.hasCheckIn2 = false;
-      ms.docRef
+      matchedDoc.reference
           .updateData({'hasCheckIn2': false})
           .whenComplete(() {})
           .catchError((e) => print(e));
     }
   }
 
-  void completeSession1(MatchedSession ms, double rating, String feedback,
+  void completeSession1(DocumentSnapshot matchedDoc, double rating, String feedback,
       String comment, DocumentSnapshot partnerDoc, double numHour) {
-    ms.docRef
+    matchedDoc.reference
         .updateData({
           'rate1': rating,
           'feedback1': feedback,
@@ -110,12 +111,9 @@ class MatchedSessionController {
     ProfileController().updatePartnerDoc(partnerDoc, rating, numHour);
   }
 
-  void completeSession2(MatchedSession ms, double rating, String feedback,
+  void completeSession2(DocumentSnapshot matchedDoc, double rating, String feedback,
       String comment, DocumentSnapshot partnerDoc, double numHour) {
-    ms.rate2 = rating;
-    ms.feedback2 = feedback;
-    ms.comment2 = comment;
-    ms.docRef
+    matchedDoc.reference
         .updateData({
           'rate2': rating,
           'feedback2': feedback,
@@ -130,7 +128,7 @@ class MatchedSessionController {
 
   MatchedSession getSessionFromDoc(DocumentSnapshot doc) {
     for (MatchedSession ms in globals.matchedList) {
-      if (ms.docRef == doc.reference) return ms;
+      if (ms.id == doc['ID']) return ms;
     }
     return null;
   }

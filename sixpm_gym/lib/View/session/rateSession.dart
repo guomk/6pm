@@ -207,9 +207,9 @@ class _RateSessionState extends State<RateSession> {
                               } else {
                                 //Update matchedDocument rate, feedback, comments
                                 if (partnerIsID1) {
-                                  MatchedSessionController().completeSession2(matchedSession, rating, textController.text, globalComment.getComments(), partnerDoc, document['numHour']);
+                                  MatchedSessionController().completeSession2(document, rating, textController.text, globalComment.getComments(), partnerDoc, document['numHour']);
                                 } else {
-                                  MatchedSessionController().completeSession1(matchedSession, rating, textController.text, globalComment.getComments(), partnerDoc, document['numHour']);
+                                  MatchedSessionController().completeSession1(document, rating, textController.text, globalComment.getComments(), partnerDoc, document['numHour']);
                                 }
                                 //Update current user document hourSum and numOfSession and average rating
                                 ProfileController().completeSessionUpdate(currentUserDoc, document['numHour']);

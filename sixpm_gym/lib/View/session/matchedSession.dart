@@ -52,9 +52,9 @@ class MatchedSessionPage extends StatelessWidget {
                   partnerIsID1 = true;
 
                 if (partnerIsID1)
-                  MatchedSessionController().checkIn2(true, matchedSession);
+                  MatchedSessionController().checkIn2(true, document);
                 else
-                  MatchedSessionController().checkIn1(true, matchedSession);
+                  MatchedSessionController().checkIn1(true, document);
 
                 Navigator.push(
                     context,
@@ -92,7 +92,7 @@ class MatchedSessionPage extends StatelessWidget {
               new FlatButton(
                 onPressed: () {
                   MatchedSessionController()
-                      .deleteMatchedSession(matchedSession);
+                      .deleteMatchedSession(document);
                   Navigator.popUntil(context, ModalRoute.withName('homepage'));
                 },
                 child: new Text('Yes'),
@@ -108,10 +108,11 @@ class MatchedSessionPage extends StatelessWidget {
         MatchedSessionController().getSessionFromDoc(document);
     DateTime _checkInMin = DateTime.now().add(new Duration(minutes: 15));
     DateTime _checkInMax = DateTime.now().subtract(new Duration(minutes: 15));
+    DateTime startDateTime = new DateTime.fromMillisecondsSinceEpoch(document['startDateTime'].seconds * 1000);
+
     final bool allowCheckIn =
-        ((_checkInMin.isAfter(document['startDateTime'].toDate())) &&
-            (_checkInMax.isBefore(document[
-                'startDateTime']))); //Only can check in +-15mins of start time
+        ((_checkInMin.isAfter(startDateTime) &&
+            (_checkInMax.isBefore(startDateTime)))); //Only can check in +-15mins of start time
 
     return Scaffold(
       appBar: AppBar(

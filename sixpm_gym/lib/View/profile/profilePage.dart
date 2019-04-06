@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import '../widgets/init_db_1.dart';
-//import '../widgets/clear_db.dart';
+import '../widgets/init_db_1.dart';
+import '../widgets/clear_db.dart';
 
 class MyProfile extends StatefulWidget {
   final FirebaseUser user;
@@ -274,11 +274,11 @@ class _MyProfileState extends State<MyProfile> {
                             ),
                           ),
                         ),
-                        //Row(children: <Widget>[
+                        Row(children: <Widget>[
                           //NOTE COMMENT THIS ROW WHEN PRESENTING
-                        //ClearDBWidget(),
-                        //InitDBWidget(),
-                        //])
+                        ClearDBWidget(),
+                        InitDBWidget(),
+                        ])
                       ],
                     )
                   ],

@@ -53,9 +53,11 @@ class SessionCheckInState extends State<SessionCheckIn>
                     new FlatButton(
                       onPressed: () {
                         if (partnerIsID1)
-                          MatchedSessionController().checkIn2(false, matchedSession);
+                          MatchedSessionController().checkIn2(false, document);
                         else
-                          MatchedSessionController().checkIn1(false, matchedSession);
+                          MatchedSessionController().checkIn1(false, document);
+                          
+                          Navigator.of(context).pop(true);
                       },
                       child: new Text('Yes'),
                     ),
