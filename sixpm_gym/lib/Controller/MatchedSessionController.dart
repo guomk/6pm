@@ -10,6 +10,8 @@ class MatchedSessionController {
   void createMatchedSession(
       DocumentSnapshot unmatchedDocument, String uid2) async {
     var highestID = 0;
+    int sessionID;
+    print("Matching start ...");
     await Firestore.instance //Get highest session document ID
         .collection('MatchedSession')
         .getDocuments()
@@ -18,7 +20,13 @@ class MatchedSessionController {
       if (sessionCount != 0) {
         for (int i = 0; i < sessionCount; i++) {
           DocumentSnapshot session = doc.documents[i];
-          if (session['ID'] > highestID) highestID = session['ID'];
+          print(session['ID'] is int);
+          if (session['ID'] is String)
+            sessionID = int.parse(session['ID']);
+          else
+            sessionID = session['ID'];
+
+          if (sessionID > highestID) highestID = sessionID;
         }
       }
     });
@@ -47,6 +55,7 @@ class MatchedSessionController {
 
     //Set isMatched of unmatchedSession to true
     unmatchedDocument.reference.updateData({'isMatched': true});
+    print("Match Success...");
   }
 
   void deleteMatchedSession(MatchedSession ms) {

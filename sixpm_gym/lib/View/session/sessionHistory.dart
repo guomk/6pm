@@ -54,7 +54,7 @@ class SessionHistoryListState extends State<SessionHistoryList> {
                         child: InkWell(
                           child: Container(
                               child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.people,
                                   color: Colors.black, size: 60.0),
