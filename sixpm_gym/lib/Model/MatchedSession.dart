@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MatchedSession{
+class MatchedSession {
   String date;
   String startTime;
   String endTime;
@@ -19,22 +19,21 @@ class MatchedSession{
   bool completed;
   double rate1;
   double rate2;
-  DateTime startDateTime;
+  Timestamp startDateTime;
   DocumentReference docRef;
 
   //Constructor
   MatchedSession(
-    this.location,
-    this.userID1,
-    this.userID2,
-    this.focus,
-    this.date,
-    this.startTime,
-    this.endTime,
-    this.startDateTime,
-    this.numHour,
-    this.id
-  ){
+      this.location,
+      this.userID1,
+      this.userID2,
+      this.focus,
+      this.date,
+      this.startTime,
+      this.endTime,
+      this.startDateTime,
+      this.numHour,
+      this.id) {
     //Initialized variables
     completed = false;
     hasCheckIn1 = false;
@@ -47,14 +46,14 @@ class MatchedSession{
     feedback2 = '';
   }
 
-  Map<String, Object> getMap(){
-        Map<String, Object> data = <String, Object>{
+  Map<String, Object> getMap() {
+    Map<String, Object> data = <String, Object>{
       'ID': id,
       'location': location,
       'startTime': startTime,
       'endTime': endTime,
       'date': date,
-      'startDateTime':startDateTime,
+      'startDateTime': startDateTime,
       'focus': focus,
       'userID1': userID1,
       'userID2': userID2,
@@ -67,7 +66,7 @@ class MatchedSession{
       'hasCheckIn1': hasCheckIn1,
       'hasCheckIn2': hasCheckIn2,
       'completed': completed,
-      'numHour' : numHour,
+      'numHour': numHour,
     };
     return data;
   }

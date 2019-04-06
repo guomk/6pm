@@ -6,7 +6,8 @@ import 'package:sixpm_gym/Model/MatchedSession.dart';
 import 'package:sixpm_gym/Controller/MatchedSessionController.dart';
 
 class MatchedSessionPage extends StatelessWidget {
-  MatchedSessionPage(this.document); //constructor receives session document from sessionMain
+  MatchedSessionPage(
+      this.document); //constructor receives session document from sessionMain
   final DocumentSnapshot document;
 
   Widget _checkInButton(context, allowCheckIn, MatchedSession matchedSession) {
@@ -90,7 +91,8 @@ class MatchedSessionPage extends StatelessWidget {
               ),
               new FlatButton(
                 onPressed: () {
-                  MatchedSessionController().deleteMatchedSession(matchedSession);
+                  MatchedSessionController()
+                      .deleteMatchedSession(matchedSession);
                   Navigator.popUntil(context, ModalRoute.withName('homepage'));
                 },
                 child: new Text('Yes'),
@@ -102,11 +104,12 @@ class MatchedSessionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MatchedSession matchedSession = MatchedSessionController().getSessionFromDoc(document);
+    final MatchedSession matchedSession =
+        MatchedSessionController().getSessionFromDoc(document);
     DateTime _checkInMin = DateTime.now().add(new Duration(minutes: 15));
     DateTime _checkInMax = DateTime.now().subtract(new Duration(minutes: 15));
     final bool allowCheckIn =
-        ((_checkInMin.isAfter(document['startDateTime'])) &&
+        ((_checkInMin.isAfter(document['startDateTime'].toDate())) &&
             (_checkInMax.isBefore(document[
                 'startDateTime']))); //Only can check in +-15mins of start time
 
@@ -142,7 +145,8 @@ class MatchedSessionPage extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 20),
                   new FutureBuilder(
-                      future: MatchedSessionController().getPartnerDoc(document, globalUID.uid),
+                      future: MatchedSessionController()
+                          .getPartnerDoc(document, globalUID.uid),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {
                           if (snapshot.data != null) {
@@ -153,7 +157,8 @@ class MatchedSessionPage extends StatelessWidget {
                                     snapshot.data['lastName'] +
                                     '\n' +
                                     'Partner Rating: ' +
-                                    snapshot.data['currentRating'].toStringAsFixed(2),
+                                    snapshot.data['currentRating']
+                                        .toStringAsFixed(2),
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.normal));
