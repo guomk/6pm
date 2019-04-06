@@ -36,102 +36,94 @@ class _MySessionListState extends State<MySessionList> {
                   final DocumentSnapshot document = docs[index];
 
                   return Card(
-                      elevation: 8.0,
-                      margin: new EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 2.0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 75,
-                        decoration:
-                            BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
-                        child: ListTile(
-                          leading: Container(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Icon(Icons.people,
-                                  color: Colors.black, size: 60.0),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                width: 290,
-                                alignment: Alignment.center,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                    elevation: 8.0,
+                    margin: new EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 2.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 75,
+                      decoration:
+                          BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.people, color: Colors.black, size: 60.0),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            width: 290,
+                            alignment: Alignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                    document['date'] +
+                                        ', ' +
+                                        document['startTime'] +
+                                        ' - ' +
+                                        document['endTime'],
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
+                                Container(
+                                    child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Text(
-                                        document['date'] +
-                                            ', ' +
-                                            document['startTime'] +
-                                            ' - ' +
-                                            document['endTime'],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
                                     Container(
-                                        child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        Container(
-                                            height: 40.0,
-                                            width: 125.0,
-                                            color: Colors.transparent,
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black,
-                                                        style:
-                                                            BorderStyle.solid,
-                                                        width: 1.0),
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.0)),
-                                                child: Center(
-                                                  child: Text(
-                                                      document['location'],
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ))),
-                                        Container(
-                                            height: 40.0,
-                                            width: 125.0,
-                                            color: Colors.transparent,
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black,
-                                                        style:
-                                                            BorderStyle.solid,
-                                                        width: 1.0),
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.0)),
-                                                child: Center(
-                                                  child: Text(document['focus'],
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ))),
-                                      ],
-                                    ))
+                                        height: 40.0,
+                                        width: 125.0,
+                                        color: Colors.transparent,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black,
+                                                    style: BorderStyle.solid,
+                                                    width: 1.0),
+                                                color: Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)),
+                                            child: Center(
+                                              child: Text(document['location'],
+                                                  overflow: TextOverflow.clip,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ))),
+                                    Container(
+                                        height: 40.0,
+                                        width: 125.0,
+                                        color: Colors.transparent,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.black,
+                                                    style: BorderStyle.solid,
+                                                    width: 1.0),
+                                                color: Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)),
+                                            child: Center(
+                                              child: Text(document['focus'],
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ))),
                                   ],
-                                ),
-                              )
-                            ],
-                          )),
-                        ),
-                      ));
+                                ))
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
               );
             } else {

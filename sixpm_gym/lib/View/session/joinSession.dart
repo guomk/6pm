@@ -173,7 +173,8 @@ class SessionListState extends State<SessionList> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SessionInfo(document))); //Sends current session document to sessionInfo page
+                                    builder: (context) => SessionInfo(
+                                        document))); //Sends current session document to sessionInfo page
                           },
                         ),
                       ));

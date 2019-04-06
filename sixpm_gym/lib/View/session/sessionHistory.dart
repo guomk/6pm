@@ -32,7 +32,7 @@ class SessionHistoryListState extends State<SessionHistoryList> {
                 (item['userID2'] ==
                     globalUID
                         .uid))); //removes all documents where both userID1 and userID2 != current user
-                        
+
             if (docs.length != 0) {
               return ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -51,8 +51,8 @@ class SessionHistoryListState extends State<SessionHistoryList> {
                         height: 75,
                         decoration:
                             BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
-                        child: ListTile(
-                          leading: Container(
+                        child: InkWell(
+                          child: Container(
                               child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
