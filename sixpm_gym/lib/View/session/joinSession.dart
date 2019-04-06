@@ -62,8 +62,9 @@ class SessionListState extends State<SessionList> {
                   item['level'] ==
                   'Pro'); //removes all documents where level = Newbie if the current user is a Newbie
 
-            docs.retainWhere((item) => now.isBefore(item[
-                'startDateTime'])); //removes all documents where start datetime is before now (expired)
+            docs.retainWhere((item) => now.isBefore(
+                DateTime.fromMillisecondsSinceEpoch(item['startDateTime']
+                    .millisecondsSinceEpoch))); //removes all documents where start datetime is before now (expired)
 
             if (docs.length != 0) {
               return ListView.builder(
@@ -83,10 +84,10 @@ class SessionListState extends State<SessionList> {
                         height: 75,
                         decoration:
                             BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0)),
-                        child: ListTile(
-                          leading: Container(
+                        child: InkWell(
+                          child: Container(
                               child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(Icons.people,
                                   color: Colors.black, size: 60.0),

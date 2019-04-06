@@ -25,7 +25,9 @@ class _MySessionListState extends State<MySessionList> {
             return new Center(child: CircularProgressIndicator());
           default:
             docs = snapshot.data.documents; //adds all documents to a list
-
+            docs.retainWhere((item) => DateTime.now().isBefore(
+                DateTime.fromMillisecondsSinceEpoch(item['startDateTime']
+                    .millisecondsSinceEpoch))); //removes all documents where start datetime is before now (expired)
             if (docs.length != 0) {
               return ListView.builder(
                 scrollDirection: Axis.vertical,
