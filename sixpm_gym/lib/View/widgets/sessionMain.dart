@@ -122,8 +122,9 @@ class SessionListState extends State<SessionList> {
                         globalUID
                             .uid))); //removes all documents where both userID1 and userID2 != current user
 
-                docs.retainWhere((item) => now.isBefore(item['startDateTime']
-                    .toDate())); //removes all documents where start datetime is before now
+                docs.retainWhere((item) => now.isBefore(
+                    DateTime.fromMillisecondsSinceEpoch(item['startDateTime']
+                        .millisecondsSinceEpoch))); //removes all documents where start datetime is before now
 
                 if (docs.length != 0) {
                   return ListView.builder(
